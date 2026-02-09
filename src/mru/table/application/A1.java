@@ -7,7 +7,11 @@ public class A1 {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Table catSounds = new Table();
-		catSounds.printTable(0);	
+		catSounds.printTable(0);
+		catSounds.sortByAlphabetical();
+		catSounds.printTable(0);
+		catSounds.sortByDefault();
+		catSounds.printTable(0);
 	}
 
 	

@@ -14,7 +14,7 @@ public class Table {
 	//	[?] a method to return the number of rows in the table;
 	//	[X] a method to print the table, printTable(int r) that can be used for testing purposes. 	r is the number of rows to print. If r is 0, the whole table is printed, otherwise the 	first r rows are printed.
 	//	[x] methods to sort the rows by both the natural ordering 
-	//  [] and by a custom Comparator;
+	//  [x] and by a custom Comparator;
 	//	[x] a select method, public Table select( String s) that returns a new table that contains 	the rows from the table that contain the string s. (This is like a SQL WHERE clause.)
 
 	private String tableName;
@@ -137,6 +137,10 @@ public class Table {
 	 */
 	public void sortByDefault() {
 		Collections.sort(table);
+	}
+	
+	public void sortByAlphabetical() {
+		 Collections.sort(table, new TextAlphabeticalCompare());
 	}
 	
 	public Table select(String s) {
