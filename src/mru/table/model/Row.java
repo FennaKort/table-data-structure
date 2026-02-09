@@ -82,7 +82,7 @@ public class Row implements Comparable<Row> {
 	}
 
 	/**
-	 * evaluates for default ordering for row objects in Ascending Order By Id; returns 1 if current row's id value is smaller than comparison row's id, 0 if equal, and -1 if current id is greater than comparison id
+	 * evaluates for default ordering for row objects in Ascending Order By Id; returns -1 if current row's id value is smaller than comparison row's id (ie., current row comes first), 0 if equal, and 1 if current id is greater than comparison id (ie., current row comes after)
 	 */
 	@Override
 	public int compareTo(Row o) {
@@ -96,7 +96,7 @@ public class Row implements Comparable<Row> {
 						compare = 1;
 					}
 				} else {
-					//if o represents the same row as current row, No further assignment to compare is necessary  because compare = 0 by default
+					//if o represents the same row as current row, No further assignment to compare is necessary  because compare == 0 by default
 				}
 			//}
 		} catch (NullPointerException e) {

@@ -13,7 +13,8 @@ public class Table {
 	//	[X] a method to add a row to the table, addRow(String s);
 	//	[?] a method to return the number of rows in the table;
 	//	[X] a method to print the table, printTable(int r) that can be used for testing purposes. 	r is the number of rows to print. If r is 0, the whole table is printed, otherwise the 	first r rows are printed.
-	//	[] methods to sort the rows by both the natural ordering and by a custom Comparator;
+	//	[x] methods to sort the rows by both the natural ordering 
+	//  [] and by a custom Comparator;
 	//	[x] a select method, public Table select( String s) that returns a new table that contains 	the rows from the table that contain the string s. (This is like a SQL WHERE clause.)
 
 	private String tableName;
@@ -131,9 +132,11 @@ public class Table {
 		return "The table " + getTableName().toUpperCase() + " has " + getTableSize()  + " row(s).";
 	}
 	
+	/**
+	 * sorts table ArrayList by row object natural ordering,  ascending order by row Id
+	 */
 	public void sortByDefault() {
 		Collections.sort(table);
-		printTable(0);
 	}
 	
 	public Table select(String s) {
