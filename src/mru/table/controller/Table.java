@@ -149,7 +149,7 @@ public class Table {
 		
 		for(int i=0; i<getTableSize() ;i++) {
 			// if table row contains  target string, add Row's TextTo ArrayList selected
-			if(this.table.get(i).getText().contains(s)) {
+			if(this.table.get(i).getText().toLowerCase().contains(s.toLowerCase())) {
 				selected.add(table.get(i).getText());
 			}
 		}

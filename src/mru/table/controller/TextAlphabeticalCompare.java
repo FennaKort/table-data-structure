@@ -16,12 +16,9 @@ public class TextAlphabeticalCompare implements Comparator<Row> {
 		int compare = 0;
 		try {
 			if (o1 != null && !o1.equals(o2)) {
-				System.out.println("nya");
 				if (o1.getText().compareTo(o2.getText()) < 0){ //o1's Text comes Before o2
-					System.out.println("before");
 					compare = -1;
 				}else if (o1.getText().compareTo(o2.getText()) > 0){ //o1's Text comes after o2
-					System.out.println("after");
 					compare = 1;
 				}//no assignment to compare needed if compareTo==0 because compare is already 0
 			} 
