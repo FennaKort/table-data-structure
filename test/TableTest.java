@@ -17,10 +17,6 @@ class TableTest {
 		catSounds.addRow("nya");
 		catSounds.addRow("meow");
 		catSounds.addRow("prrroww");
-		System.out.println("cats nyaaaa");
-		for(Row r:catSounds.getTable()) {
-			System.out.println(r.toString());
-		}
 		assertEquals(3, catSounds.getTable().get(2).getId());
 		assertEquals("prrroww", catSounds.getTable().get(2).getText());
 	}
@@ -55,10 +51,17 @@ class TableTest {
 		catSounds.addRow(new Row(7,"nya"));
 		catSounds.addRow(new Row(6,  "meow"));
 		catSounds.addRow(new Row(1, "prrroww"));
-		catSounds.printTable(0);
 		Collections.sort(catSounds.getTable());
-		catSounds.printTable(0);
 		assertEquals("prrroww", catSounds.getTable().get(0).getText());
+	}
+	
+	@Test
+	void testSortByAlphabetical() {
+		catSounds.addRow("prrroww");
+		catSounds.addRow("meow");
+		catSounds.addRow("nya");
+		catSounds.sortByAlphabetical();
+		assertEquals("prrroww", catSounds.getTable().get(2).getText());
 	}
 	
 

@@ -7,7 +7,7 @@ import java.util.Scanner;
 import mru.table.model.Row;
 
 public class Table {
-	//	REQUIREMENTS:
+	//	TODO REQUIREMENTS:
 	//	[X] a constructor;
 	//	[X] getters and setters for all instance variables;
 	//	[X] a method to add a row to the table, addRow(String s);
@@ -110,7 +110,6 @@ public class Table {
 	 */
 	public void printTable(int r) {
 		int tableSize = getTableSize();
-		System.out.println(toString());
 		if (tableSize != 0) { //table is not empty
 			if (r == 0) { //print entire table
 				for(int i=0; i<tableSize; i++) {
