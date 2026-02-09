@@ -91,9 +91,9 @@ public class Row implements Comparable<Row> {
 			//if (o != null) { 
 				if (!this.equals(o)) { //if o is not null, check that o does not represent the same row as current row
 					if (this.id < o.getId()) { //this.id comes before o.id
-						compare = 1;
+						compare = -1;
 					} else if (this.id> o.getId()) {  //this.id comes after o.id
-						
+						compare = 1;
 					}
 				} else {
 					//if o represents the same row as current row, No further assignment to compare is necessary  because compare = 0 by default

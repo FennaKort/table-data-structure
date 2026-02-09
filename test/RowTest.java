@@ -2,7 +2,6 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import mru.table.model.Row;
@@ -35,5 +34,7 @@ class RowTest {
 	@Test
 	void testCompareTo() {
 		assertEquals(0, r1.compareTo(r3));
+		assertEquals(-1, r1.compareTo(r2));
+		assertEquals(1, r2.compareTo(r1));
 	}
 }
