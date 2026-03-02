@@ -8,6 +8,7 @@ import mru.table.model.Row;
 
 public class Table {
 	//	TODO REQUIREMENTS:
+	//test
 	//   [] the table should include an ArrayList of Row objects. The first row is the header row and contains the names of the columns;
 	//	 [] a constructor with no parameters that simply creates an empty table;
 	//	 [] a constructor that takes a file name (String). The constructor will create a new empty Table and then read the CSV data from that file into the table.
