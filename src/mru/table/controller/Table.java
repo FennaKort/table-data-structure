@@ -8,14 +8,17 @@ import mru.table.model.Row;
 
 public class Table {
 	//	TODO REQUIREMENTS:
-	//	[X] a constructor;
-	//	[X] getters and setters for all instance variables;
-	//	[X] a method to add a row to the table, addRow(String s);
-	//	[?] a method to return the number of rows in the table;
-	//	[X] a method to print the table, printTable(int r) that can be used for testing purposes. 	r is the number of rows to print. If r is 0, the whole table is printed, otherwise the 	first r rows are printed.
-	//	[x] methods to sort the rows by both the natural ordering 
-	//  [x] and by a custom Comparator;
-	//	[x] a select method, public Table select( String s) that returns a new table that contains 	the rows from the table that contain the string s. (This is like a SQL WHERE clause.)
+	//   [] the table should include an ArrayList of Row objects. The first row is the header row and contains the names of the columns;
+	//	 [] a constructor with no parameters that simply creates an empty table;
+	//	 [] a constructor that takes a file name (String). The constructor will create a new empty Table and then read the CSV data from that file into the table.
+	//	 [] getters and setters for all instance variables;
+	//	 [] methods to add a rows to the table. The method addRow() will be overloaded. One will be the one you used in Assignment 1, addRow( int id, String s) (s should be a list of column values separated by commas) as well as addRow( Row r) which adds an existing Row object, and addRow( int id, String[] cols) with the column values already in an array.
+	//	 [] a method to return the number of rows in the table;
+	//	 [] a method to print the table, printTable(int r) that can be used for testing purposes. r is the number of rows to print. If r is 0, the whole table is printed, otherwise the first r rows are printed.
+	//	 [] methods to sort the rows by both the natural ordering and by a custom Comparator. The custom Comparator should sort by a given column alphabetically.
+	//	 [] a project method, public Table project( String[] cols) that returns a new table that consists of all the
+	//	 [] rows of the existing table but with only the columns listed.
+	//	 [] a select method, public Table select( String field, String value) that returns a new table that contains all of the columns of the exiting table but with only the rows from the table where column field contains the string value. (This is like a SQL WHERE clause.)
 
 	private String tableName;
 	private ArrayList<Row> table = new ArrayList<Row>();
@@ -110,17 +113,25 @@ public class Table {
 	 */
 	public void printTable(int r) {
 		int tableSize = getTableSize();
+		
 		if (tableSize != 0) { //table is not empty
 			if (r == 0) { //print entire table
 				for(int i=0; i<tableSize; i++) {
 					System.out.println(table.get(i).toString());
 				}
 			} else { //beginning at start of table, print r number of rows
-				for(int i = 0; i<r; i++) {
-					System.out.println(table.get(i).toString());
+				if (r<tableSize) {
+					for(int i = 0; i<r; i++) {
+						System.out.println(table.get(i).toString());
+					}
+				} else if (r>tableSize) {
+					for(int i=0; i<tableSize; i++) {
+						System.out.println(table.get(i).toString());
+					}
 				}
 			}		
 		}
+		System.out.println("");
 	}
 
 	/**

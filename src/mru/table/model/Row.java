@@ -1,9 +1,6 @@
 package mru.table.model;
 
 public class Row implements Comparable<Row> {
-	//TODO maybe clean up the following static int
-//	private static int idCounter = 1; //stores Counter For Assigning Next Row Id; Counter Starts At One 
-	
 	private int id; // id representing the row's order/location in the table.
 	private String text; // the text to be associated with the row
 	
@@ -99,7 +96,6 @@ public class Row implements Comparable<Row> {
 				}
 
 		} catch (NullPointerException e) {
-			// TODO: test that i've handled the exception correctly
 			System.out.println(e.getMessage());
 		}
 		return compare;

@@ -1,0 +1,18 @@
+14
+12	a fool
+2	cat
+9	he 
+8	idiot baby
+10	is.
+14	is.
+3	licked
+7	like the
+1	the
+4	the
+
+4
+1	like the
+2	the
+3	the
+4	the cat
+

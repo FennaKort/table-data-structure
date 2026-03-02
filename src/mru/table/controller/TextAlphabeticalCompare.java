@@ -12,7 +12,6 @@ public class TextAlphabeticalCompare implements Comparator<Row> {
 
 	@Override
 	public int compare(Row o1, Row o2) {
-		// TODO Auto-generated method stub
 		int compare = 0;
 		try {
 			if (o1 != null && !o1.equals(o2)) {
