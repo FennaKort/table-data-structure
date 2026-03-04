@@ -38,3 +38,4 @@ coverage/
 # Eslint cache (if applicable)
 .eslintcache
 /bin/
+/bin/
