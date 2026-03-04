@@ -51,10 +51,9 @@ public class Table {
 	}
 	
 	/**
-	 * @return
+	 * @return the number of rows in the table as an int
 	 */
 	public int getTableSize() {
-		//TODO confirm the assignment requirement means this should return  the size of the table  as in an int as per "a method to return the number of rows in the table"
 		if (table == null)
 			return 0;
 		else

@@ -1,12 +1,14 @@
 package mru.table.model;
 
 public class Row implements Comparable<Row> {
+	// TODO update Row To Contain An Array of Strings
+	// TODOUpdate compare methods to reflect that it's now an array instead of a single string
 	private int id; // id representing the row's order/location in the table.
-	private String text; // the text to be associated with the row
+	private String[] values; // the cells to be associated with the row
 	
 //constructors
 	/**
-	 * defaultConstructor, setsIdToZeroAndTextToNull
+	 * defaultConstructor, sets Id To Zero And Values To Null
 	 */
 	public Row() {}
 	
@@ -17,17 +19,17 @@ public class Row implements Comparable<Row> {
 	 */
 	public Row(Row r) {
 		this.id = r.getId();
-		this.text = r.getText();
+		this.values = r.getValues();
 	}
 	
 	/**
 	 * constructor To Create a new row object with a row id that has been incremented by one 
 	 * @param id the integer to use as the row id
-	 * @param text the text of the row as a string
+	 * @param values the cell Data of the row as An Array
 	 */
-	public Row(int id, String text) {
+	public Row(int id, String[]  values) {
 		this.id = id;
-		this.text = text;
+		this.values =  values;
 	}
 	
 	
@@ -39,21 +41,29 @@ public class Row implements Comparable<Row> {
 	public int getId() {return id;}
 	
 	/**
-	 * retrieves the text associated with the row
-	 * @return the row's text as a string
-	 */
-	public String getText() {return text;}
-
-	/**
 	 * sets the id of the row. the id should correspond to the row's order/location in the table
 	 * @param id the id to set
 	 */
 	public void setId(int id) {this.id = id;}
+	
+	
 	/**
-	 * sets the text that should be associated with the row
-	 * @param text the row's text as a string
+	 * retrieves the cell data associated with the row
+	 * @return the row's  cell data as  an array
 	 */
-	public void setText(String text) {this.text = text;}
+	public String[] getValues() {return values;}
+	
+	/**
+	 * sets the  cell data that should be associated with the row
+	 * @param  values the row's cell data as  an array
+	 */
+	public void setValues(String[] values) {this.values = values;}
+
+
+
+	
+	
+	
 	
 //UtilityMethods
 
