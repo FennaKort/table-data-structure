@@ -99,9 +99,9 @@ public class Row implements Comparable<Row> {
 //UtilityMethods
 
 	/**
-	 *tests whether or not another row has the same id and cell Data as the current row.  if true, the two objects represent the same row in the table
+	 *tests whether or not another row has the same id as the current row. 
 	 *@param o another Row object to test For equivalency
-	 *@return true if both objects contain the same id and Cell Data values; false if not
+	 *@return true if both objects contain the same id; false if not
 	 * @throws NullPointerException 
 	 */
 	public boolean equals(Row o) throws NullPointerException {
@@ -109,21 +109,9 @@ public class Row implements Comparable<Row> {
 		if (o == null) { //o contains no object reference
 			//no change to var equals necessary
 			throw new NullPointerException("Row o cannot be used as a parameter for comparison, as o is null");
-		} else if (o.getValues() == null) {
-			throw new NullPointerException("Row " + o.getId() +" contains no cell data");
-		}
-		else if ((o.getId() == this.id) && (o.getValues().length == this.getValues().length)) { // if ids are the same and the  rows store the same number of columns,  compare cell by cell
-			boolean cellByCell = false;			
-			for (int i = 0; i < o.getValues().length; i++) {
-				if (this.getValues()[i].equals(o.getValues()[i])) {
-					cellByCell = true; //this can't work because it could return true if only last cells are identical
-				}
-			}
-			equals = cellByCell;
-			
-			if (compareAllCells(o) == 0) {
+		} 
+		else if (o.getId() == this.id) { 
 				equals = true;
-			}
 		}
 		// if neither of the previous conditions are satisfied, the two objects are not equal; no change to var equals is necessary
 		return equals; 
