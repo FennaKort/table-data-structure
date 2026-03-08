@@ -21,20 +21,18 @@ public class CompareRowsAlphabetically implements Comparator<Row> {
 	public int compare(Row o1, Row o2) {
 		try {
 			if (o1 != null && o2 != null && o1.getValues().length == o2.getValues().length) {
-				//TODO ENDLESS LOOP FOUND, NEEDS CLEANUP
-					//compare each pair of cells
+				//compare each pair of cells
 					for (int i = 0; i < o1.getValues().length; i++) {
-						do {
-							compare = o1.getValues()[i].compareTo(o2.getValues()[i]);
-						
-						}while(compare == 0);
-				}  //continue until a difference is found, or for all cells
-				
+						compare = o1.getValues()[i].compareTo(o2.getValues()[i]);
+						if (compare != 0) //stop loop if difference found
+							break;
+					}
+
 				//if a difference was found, convert comparison to either 1 or -1 because String.compareTo() returns a greater range of positive or negative ints
 				if (compare < 0) {
 					compare = -1; //o1 precedes o2 according to alphabetical order in difference 
 				} else if (compare > 0) {
-					compare = 1; //this row follows o according to alphabetical order in difference
+					compare = 1; //o1 follows o2 according to alphabetical order in difference
 				}
 			}
 			

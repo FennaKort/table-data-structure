@@ -10,9 +10,9 @@ import mru.table.model.Row;
 class CompareRowsAlphabeticallyTest {
 	CompareRowsAlphabetically alphaCompare = new CompareRowsAlphabetically();
 	private int idCounter = 1;
-	private Row r1 = new Row(idCounter++,"meow");
-	private Row r2 = new Row(idCounter++,"purr");
-	private Row r3 = new Row(idCounter++, "meow");
+	private Row r1 = new Row(idCounter++, new String[]{"meow","prrow", "mew"});
+	private Row r2 = new Row(idCounter++, new String[]{"meow","purr", "mew"});
+	private Row r3 = new Row(idCounter++, new String[]{"meow","prrow", "mew"});
 
 	@Test
 	void testPrecedes() {
