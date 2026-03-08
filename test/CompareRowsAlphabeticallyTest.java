@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import mru.table.controller.CompareRowsAlphabetically;
 import mru.table.model.Row;
 
+/**
+ * @author Fenna Buitenwerf
+ */
 class CompareRowsAlphabeticallyTest {
 	CompareRowsAlphabetically alphaCompare = new CompareRowsAlphabetically();
 	private int idCounter = 1;

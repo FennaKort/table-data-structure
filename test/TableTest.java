@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 import mru.table.controller.Table;
 import mru.table.model.Row;
 
+/**
+ * @author Fenna Buitenwerf
+ */
 class TableTest {
 	private Table catSounds = new Table("cat sounds");
 	

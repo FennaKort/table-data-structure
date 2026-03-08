@@ -6,6 +6,7 @@ import mru.table.model.Row;
 
 /**
  * for comparing data in all row cells and sorting alphabetically if differences are found in any column
+ * @author Fenna Buitenwerf
  */
 public class CompareRowsAlphabetically implements Comparator<Row> {
 	int compare;

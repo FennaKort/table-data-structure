@@ -6,6 +6,9 @@ import java.util.Scanner;
 
 import mru.table.model.Row;
 
+/**
+ * @author Fenna Buitenwerf
+ */
 public class Table {
 	//	TODO REQUIREMENTS:
 	//test
@@ -17,8 +20,7 @@ public class Table {
 	//	 [] a method to return the number of rows in the table;
 	//	 [] a method to print the table, printTable(int r) that can be used for testing purposes. r is the number of rows to print. If r is 0, the whole table is printed, otherwise the first r rows are printed.
 	//	 [] methods to sort the rows by both the natural ordering and by a custom Comparator. The custom Comparator should sort by a given column alphabetically.
-	//	 [] a project method, public Table project( String[] cols) that returns a new table that consists of all the
-	//	 [] rows of the existing table but with only the columns listed.
+	//	 [] a project method, public Table project( String[] cols) that returns a new table that consists of all the rows of the existing table but with only the columns listed.
 	//	 [] a select method, public Table select( String field, String value) that returns a new table that contains all of the columns of the exiting table but with only the rows from the table where column field contains the string value. (This is like a SQL WHERE clause.)
 
 	private String tableName;

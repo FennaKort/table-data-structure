@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import mru.table.model.Row;
 
+/**
+ * @author Fenna Buitenwerf
+ */
 class RowTest {
 	private int idCounter = 1;
 	private Row r1 = new Row(idCounter++, new String[]{"meow","prrow", "mew"});
