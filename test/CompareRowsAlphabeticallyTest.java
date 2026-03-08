@@ -4,11 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import mru.table.controller.TextAlphabeticalCompare;
+import mru.table.controller.CompareRowsAlphabetically;
 import mru.table.model.Row;
 
-class TextAlphabeticalCompareTest {
-	TextAlphabeticalCompare alphaCompare = new TextAlphabeticalCompare();
+class CompareRowsAlphabeticallyTest {
+	CompareRowsAlphabetically alphaCompare = new CompareRowsAlphabetically();
 	private int idCounter = 1;
 	private Row r1 = new Row(idCounter++,"meow");
 	private Row r2 = new Row(idCounter++,"purr");
