@@ -5,7 +5,8 @@ import java.util.Comparator;
 import mru.table.model.Row;
 
 /**
- * Compare cells in the same column of two Row objects for sorting in alphabetical order.
+ * Compare cells in the same column of two Row objects for sorting in alphabetical order by the specified column.
+ * @author Fenna Buitenwerf
  */
 public class CompareColumnsAlphabetically implements Comparator<Row> {
 	/**
@@ -47,9 +48,6 @@ public class CompareColumnsAlphabetically implements Comparator<Row> {
 		}catch (NullPointerException e) {
 			System.out.println(e.getMessage());
 		}
-		
 		return compare;
-	
 	}
-
 }
