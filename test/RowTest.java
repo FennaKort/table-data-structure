@@ -8,9 +8,9 @@ import mru.table.model.Row;
 
 class RowTest {
 	private int idCounter = 1;
-	private Row r1 = new Row(idCounter++, new String[]{"meow","prow"});
-	private Row r2 = new Row(idCounter++, new String[]{"purr","mlow"});
-	private Row r3 = new Row(r1); //using the copy constructor for the row class in order to test the equals() method
+	private Row r1 = new Row(idCounter++, new String[]{"meow","prrow", "mew"});
+	private Row r2 = new Row(idCounter++, new String[]{"meow","purr", "mew"});
+	private Row r3 = new Row(r1); //using the copy constructor for the row class in order to test the equals() method; checks for natural ordering by id, so need to confirm it will return true if id's are the same
 	
 	@Test
 	void testRowConstructor() {

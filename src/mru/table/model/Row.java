@@ -1,23 +1,29 @@
 package mru.table.model;
 
+/**
+ * represents a row in a table. has an array to store cell values as strings, and an id int to store the rows id
+ * @author Fenna Buitenwerf
+ */
 public class Row implements Comparable<Row> {
-	// TODO update Row To Contain An Array of Strings
-	// TODOUpdate compare methods to reflect that it's now an array instead of a single string
-//	[x] constructors, one to create a row with a comma separated string and one to create a row with an array of strings;
-//	 [x] getters and setters;
-//	 [x] .toString() method;
-//	 [] The class should implement Comparable with the natural ordering being by the id.
-//	 [x] Since the value of the row is now an array you will need to provide methods to access and set those column values
+	// [x]update Row To Contain An Array of Strings
+	// [x]Update compare methods to reflect that it's now an array instead of a single string
+	//	[x] constructors, one to create a row with a comma separated string and one to create a row with an array of strings;
+	//	 [x] getters and setters;
+	//	 [x] .toString() method;
+	//	 [x] The class should implement Comparable with the natural ordering being by the id.
+	//	 [x] Since the value of the row is now an array you will need to provide methods to access and set those column values
 	
-	private int id; // id representing the row's order/location in the table.
-	private String[] values; // the cells to be associated with the row
+	/*** id representing the row's order/location in the table; use an idCounter int inside Table class to increment*/
+	private int id; 
+	
+	/*** an array of the cells to be associated with the row*/
+	private String[] values; 
 	
 //constructors
 	/**
 	 * defaultConstructor, sets Id To Zero And Values To Null
 	 */
 	public Row() {}
-	
 	
 	/**
 	 *  copy Constructor, copies values from input row to new row
@@ -61,7 +67,6 @@ public class Row implements Comparable<Row> {
 	 */
 	public void setId(int id) {this.id = id;}
 	
-	
 	/**
 	 * retrieves an array containing all the cells associated with the row
 	 * @return the row's  cells as  an array
@@ -102,7 +107,7 @@ public class Row implements Comparable<Row> {
 	 *tests whether or not another row has the same id as the current row. 
 	 *@param o another Row object to test For equivalency
 	 *@return true if both objects contain the same id; false if not
-	 * @throws NullPointerException 
+	 *@throws NullPointerException 
 	 */
 	public boolean equals(Row o) throws NullPointerException {
 		boolean equals = false;
@@ -118,7 +123,8 @@ public class Row implements Comparable<Row> {
 	}
 
 	/**
-	 * evaluates for default ordering for row objects in Ascending Order By Id; returns -1 if current row's id value is smaller than comparison row's id (ie., current row comes first), 0 if equal, and 1 if current id is greater than comparison id (ie., current row comes after)
+	 *evaluates for default ordering for row objects in Ascending Order By Id; 
+	 *@return -1 if current row's id value is smaller than comparison row's id (ie., current row comes first), 0 if equal, and 1 if current id is greater than comparison id (ie., current row comes after)
 	 */
 	@Override
 	public int compareTo(Row o) {
@@ -139,37 +145,11 @@ public class Row implements Comparable<Row> {
 		}
 		return compare;
 	}
-	
-	
-	//TODO maybe this belongs in a separate comparator class??
-	//if one cell is different, row is different, sort row alphabetically by different cell
-	public int compareAllCells(Row o) {
-		int compare = 0;
-		try {
-			do {
-				//compare each pair of cells
-				for (int i = 0; i < o.getValues().length; i++) {
-					compare = this.getValues()[i].compareTo(o.getValues()[i]);
-				}
-			} while(compare == 0); //continue until a difference is found, or for all cells
-			
-			//if a difference was found, convert comparison to either 1 or -1 because String.compareTo() returns a greater range of positive or negative ints
-			if (compare < 0) {
-				compare = -1; //this row precedes o according to alphabetical order in difference 
-			} else if (compare > 0) {
-				compare = 1; //this row follows o according to alphabetical order in difference
-			}
-			
-		} catch (NullPointerException e) {
-			System.out.println(e.getMessage());
-		}
-		return compare;
-	}
-	
-	 @Override
+	 
 	/**
-	 * formats the row's id and cell data with a tab between them for output, ie., "1	hello	hi"
+	 * formats the row's id and cell data with a tab between them for output, ie., "1	\t hello \t hi"
 	 */
+	@Override
 	public String toString() {
 		 String output = Integer.toString(this.id);
 		 
