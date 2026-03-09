@@ -17,11 +17,12 @@ class TableTest {
 	
 	@Test
 	void testAddRow() {
-		catSounds.addRow("nya");
-		catSounds.addRow("meow");
-		catSounds.addRow("prrroww");
-		assertEquals(3, catSounds.getTable().get(2).getId());
-		assertEquals("prrroww", catSounds.getTable().get(2).getText());
+		catSounds.setHeader(new String[]{"1","2","3"});
+		catSounds.addRow(new String[]{"meow","prrow", "mew"});
+		catSounds.addRow(new String[]{"nya","purr", "hisss"});
+		catSounds.addRow(new String[]{"prrroww","meow","mllur"});
+		assertEquals(3, catSounds.getTable().get(3).getId());
+		assertEquals("prrroww", catSounds.getTable().get(3).getValues()[0]);
 	}
 	
 	@Test
@@ -32,40 +33,48 @@ class TableTest {
 
 	@Test
 	void testGetTableSize() {
-		catSounds.addRow("nya");
-		catSounds.addRow("meow");
-		catSounds.addRow("prrroww");
+		catSounds.addRow(new String[]{"meow","prrow", "mew"});
+		catSounds.addRow(new String[]{"nya","purr", "hisss"});
+		catSounds.addRow(new String[]{"prrroww","meow","mllur"});
 		assertEquals(3, catSounds.getTableSize());
 	}
 	
 	@Test
-	void testSelect() {
-		catSounds.addRow("nya");
-		catSounds.addRow("meow");
-		catSounds.addRow("prrroww");
-		Table myFavouriteCatSounds = catSounds.select("nya");
-		assertEquals(1, myFavouriteCatSounds.getTableSize());
-		assertEquals(1, myFavouriteCatSounds.getTable().get(0).getId());
-		assertEquals("nya", catSounds.getTable().get(0).getText());
+	void testFindTargetColumn() {
+		catSounds.addRow(new String[] {"Cat Name","Very Cute Sound"});
+		assertEquals(0,catSounds.findTargetColumn("cat name"));
 	}
 	
 	@Test
 	void testSortByDefault() {
+		catSounds.setHeader(new String[]{"sounds"});
 		catSounds.addRow(new Row(7,"nya"));
 		catSounds.addRow(new Row(6,  "meow"));
 		catSounds.addRow(new Row(1, "prrroww"));
 		Collections.sort(catSounds.getTable());
-		assertEquals("prrroww", catSounds.getTable().get(0).getText());
+		assertEquals("prrroww", catSounds.getTable().get(1).getValues()[0]);
 	}
 	
 	@Test
-	void testSortByAlphabetical() {
-		catSounds.addRow("prrroww");
-		catSounds.addRow("meow");
-		catSounds.addRow("nya");
-		catSounds.sortByAlphabetical();
-		assertEquals("prrroww", catSounds.getTable().get(2).getText());
+	void testSortAlphabeticallyByColumn() {
+		catSounds.addRow(new String[] {"Cat Name","Very Cute Sound"});
+		catSounds.addRow(new String[]{"Muffin","prrroww"});
+		catSounds.addRow(new String[]{"Goose","meow"});
+		catSounds.addRow(new String[]{"Winnifred","nya"});
+		catSounds.sortAlphabeticallyByColumn(1);
+		assertEquals("Very Cute Sound", catSounds.getTable().get(0).getValues()[1]); //checks header row doesn't get sorted
+		assertEquals("prrroww", catSounds.getTable().get(3).getValues()[1]);
 	}
 	
-
+	@Test
+	void testSelect() {
+		catSounds.setHeader(new String[]{"1","2","3"});
+		catSounds.addRow(new String[]{"meow","prrow", "mew"});
+		catSounds.addRow(new String[]{"nya","purr", "hisss"});
+		catSounds.addRow(new String[]{"prrroww","meow","mllur"});
+		Table myFavouriteCatSounds = catSounds.select("1","nya");
+		assertEquals(2, myFavouriteCatSounds.getTableSize());
+		assertEquals(2, myFavouriteCatSounds.getTable().get(1).getId());
+		assertEquals("nya", myFavouriteCatSounds.getTable().get(1).getValues()[0]);
+	}
 }

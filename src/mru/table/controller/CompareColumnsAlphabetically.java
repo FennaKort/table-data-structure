@@ -5,7 +5,7 @@ import java.util.Comparator;
 import mru.table.model.Row;
 
 /**
- * Compare cells in the same column of two Row objects for sorting in alphabetical order by the specified column.
+ * Compare cells in the same column of two Row objects for sorting in alphabetical order by the specified column. Note that the row in the table AL with id of 0 is included in output, but will not be sorted in with the rest of the AL as it represents the header row for the table.
  * @author Fenna Buitenwerf
  */
 public class CompareColumnsAlphabetically implements Comparator<Row> {
@@ -21,7 +21,7 @@ public class CompareColumnsAlphabetically implements Comparator<Row> {
 	public void setTargetIndex(int i) {this.targetColumnIndex = i;}
 	
 	/**
-	 * Use this constructor to set an index for the target column in the rows to be compared.
+	 * Use this constructor to set an index for the target column in the rows to be compared. Note that the row in the table AL with id of 0 is included in output, but will not be sorted in with the rest of the AL as it represents the header row for the table.
 	 * @param i the index of the column to be targeted
 	 */
 	public CompareColumnsAlphabetically(int i) {
@@ -29,7 +29,7 @@ public class CompareColumnsAlphabetically implements Comparator<Row> {
 	}
 	
 	/**
-	 * Compare the values of the cells in the target column (set via index of column using constructor or setter) 
+	 * Compare the values of the cells in the target column (set via index of column using constructor or setter). Note that if either row has an id of 0 it will not be sorted in with the rest of the AL as it represents the header row for the table, but will be included in output.
 	 * @param o1 first Row to compare
 	 * @param o2 second Row to compare
 	 * @return -1 if o1's cell comes before o2's cell alphabetically; returns 0 if neither cell proceeds the other alphabetically; returns 1 if o1's cell comes after o2's cell alphabetically
@@ -38,7 +38,7 @@ public class CompareColumnsAlphabetically implements Comparator<Row> {
 	public int compare(Row o1, Row o2) {
 		int compare = 0;
 		try {
-			if (o1 != null && o2 != null  && o1.getValues()[targetColumnIndex] != null&& o2.getValues()[targetColumnIndex] != null) {
+			if (o1 != null && o2 != null && o1.getId() != 0 && o2.getId() != 0 && o1.getValues()[targetColumnIndex] != null&& o2.getValues()[targetColumnIndex] != null) {
 				if (o1.getValues()[targetColumnIndex].compareTo(o2.getValues()[targetColumnIndex]) < 0){ //o1's cell comes Before o2's cell alphabetically
 					compare = -1;
 				}else if (o1.getValues()[targetColumnIndex].compareTo(o2.getValues()[targetColumnIndex]) > 0){ //o1's cell comes after o2's cell alphabetically

@@ -35,12 +35,19 @@ public class Row implements Comparable<Row> {
 	}
 	
 	/**
-	 * constructor To Create a new row object using an array of strings
+	 * constructor To Create a new row object using an array of strings and a specified row id
 	 * @param id the integer to use as the row id; recommend using an idCounter int inside the table class to increment the row numbers
 	 * @param values the cell Data of the row as An Array
 	 */
 	public Row(int id, String[] values) {
 		this.id = id;
+		this.values =  values;
+	}
+	/**
+	 * constructor To Create a new row object using an array of strings. Will NOT set a row id; must be set separately
+	 * @param values the cell Data of the row as An Array
+	 */
+	public Row(String[] values) {
 		this.values =  values;
 	}
 	
@@ -152,9 +159,9 @@ public class Row implements Comparable<Row> {
 	@Override
 	public String toString() {
 		 String output = Integer.toString(this.id);
-		 
+		 //TODO make the output nicer like in the toystore project
 		 for (int i = 0; i <  this.values.length;i++) {
-			 output += "\t"+this.values[i];
+			 output += "\t"+this.values[i]+"\t";
 		 }
 		 
 		 return output;
