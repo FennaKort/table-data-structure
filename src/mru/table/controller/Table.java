@@ -23,7 +23,7 @@ public class Table {
 	//	 [x] a method to return the number of rows in the table;
 	//	 [x] a method to print the table, printTable(int r) that can be used for testing purposes. r is the number of rows to print. If r is 0, the whole table is printed, otherwise the first r rows are printed.
 	//	 [x] methods to sort the rows by both the natural ordering and by a custom Comparator. 	//	 [x] The custom Comparator should sort by a given column alphabetically.
-	//	 [] a project method, public Table project( String[] cols) that returns a new table that consists of all the rows of the existing table but with only the columns listed.
+	//	 [x] a project method, public Table project( String[] cols) that returns a new table that consists of all the rows of the existing table but with only the columns listed.
 	//	 [x] a select method, public Table select( String field, String value) that returns a new table that contains all of the columns of the exiting table but with only the rows from the table where column field contains the string value. (This is like a SQL WHERE clause.)
 
 	/*** optional name for table*/
@@ -238,6 +238,7 @@ public class Table {
 	public void sortAlphabeticallyByColumn(String targetColumn) {
 		 Collections.sort(table, new CompareColumnsAlphabetically(findTargetColumn(targetColumn)));
 	}
+	
 	/**
 	 * Selects all rows from the current table that contain a specified value in the specified column. Intended to be similar to the SQL WHERE clause.
 	 * @param field the name of the column to target
@@ -245,53 +246,58 @@ public class Table {
 	 * @return a new Table containing all of the same columns as the original table, with only rows where the target column contains the target value
 	 */
 	public Table select(String field, String value) {
-		ArrayList<Row> selected = new ArrayList<Row>();
+		Table selected = new Table();
 
 		if(this.table!=null) {
 			int targetIndex = findTargetColumn(field);
 			if(targetIndex != -1) { //-1 would indicate that target field was not found in table header
-				selected.add(getHeader());
+				selected.addRow(getHeader());
 				for(int i=0; i<getTableSize() ;i++) {
 					// if target column in table row contains  target value, add Row To ArrayList selected
 					if(this.table.get(i).getValues()[targetIndex].toLowerCase().contains(value.toLowerCase())) {
-						selected.add(table.get(i));
+						selected.addRow(table.get(i));
 					}
 				}
 			}
 		}
-		return new Table(selected);
+		return selected;
 	}
 	
+	/**
+	 * Projects all values from specified columns. Intended to be similar to database PROJECT operation.
+	 * @param cols the names of the columns to contain in the projection
+	 * @return a new Table containing all data from specified columns
+	 */
 	public Table project(String[] cols) {
 		//a project method, public Table project( String[] cols) that returns a new table that consists of all the rows of the existing table but with only the columns listed.
-		ArrayList<Row> selected = new ArrayList<Row>();
-		String[] colsTotal = new String[cols.length];
-		// first, need to determine indices of target columns
-		// then, need to store these indices
-		// then, need to iterate through the entire table, access values[] of each row, copy values in target columns to a new String[], make a new Row with new values, and add to output AL
-		// then, make new Table with new output AL
+		Table projection = new Table();
+		int[] targetCols = new int[cols.length];
 		
 		if(this.table!=null) {
-			for(int i = 0; i < cols.length ; i++) { //for each target column, search
+			int colCounter = 0;
+			//determine indices of target columns:
+			for(int i = 0; i < cols.length ; i++) { //for each target column, search for index in header row
 				int targetIndex = findTargetColumn(cols[i]);
-				if (targetIndex != -1) {
-					
+				if (targetIndex != -1) { //-1 would indicate that target field was not found in table header
+					targetCols[colCounter] = targetIndex;
+					colCounter++;
 				}
-
+				if (colCounter == cols.length)
+					break;
 			}
-			
-			
-			if(targetIndex != -1) { //-1 would indicate that target field was not found in table header
-				selected.add(getHeader());
-				for(int i=0; i<getTableSize() ;i++) {
-					// if target column in table row contains  target value, add Row To ArrayList selected
-					if(this.table.get(i).getValues()[targetIndex].toLowerCase().contains(value.toLowerCase())) {
-						selected.add(table.get(i));
-					}
+		
+			//iterate through table, picking out target columns of each row:
+			for(int i = 0; i < this.table.size(); i++) {
+				String s = null;
+				String[] currValues = table.get(i).getValues();
+				
+				for(int col:targetCols) {
+					s += currValues[col] + ",";
 				}
+				projection.addRow(s);
 			}
 		}
-		return new Table(selected);
+		return projection;
 	}
 	
 	/**

@@ -77,4 +77,16 @@ class TableTest {
 		assertEquals(2, myFavouriteCatSounds.getTable().get(1).getId());
 		assertEquals("nya", myFavouriteCatSounds.getTable().get(1).getValues()[0]);
 	}
+	
+	@Test
+	void testProject() {
+		catSounds.setHeader(new String[]{"1","2","3"});
+		catSounds.addRow(new String[]{"meow","prrow", "mew"});
+		catSounds.addRow(new String[]{"nya","purr", "hisss"});
+		catSounds.addRow(new String[]{"prrroww","meow","mllur"});
+		Table myFavouriteCatSounds = catSounds.project(new String[] {"1","3"});
+		assertEquals(4, myFavouriteCatSounds.getTableSize());
+		assertEquals(2, myFavouriteCatSounds.getTable().get(0).getValues().length);
+		assertEquals("mew", myFavouriteCatSounds.getTable().get(1).getValues()[1]);
+	}
 }
