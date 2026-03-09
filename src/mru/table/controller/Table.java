@@ -1,5 +1,10 @@
 package mru.table.controller;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -14,7 +19,7 @@ public class Table {
 	//test
 	//   [x] the table should include an ArrayList of Row objects. The first row is the header row and contains the names of the columns;
 	//	 [x] a constructor with no parameters that simply creates an empty table;
-	//	 [] a constructor that takes a file name (String). The constructor will create a new empty Table and then read the CSV data from that file into the table.
+	//	 [x] a constructor that takes a file name (String). The constructor will create a new empty Table and then read the CSV data from that file into the table.
 	//	 [x] getters and setters for all instance variables;
 	//	 [x] methods to add a rows to the table. The method addRow() will be overloaded. 
 			// [x]One will be the one you used in Assignment 1, addRow( int id, String s) (s should be a list of column values separated by commas) 
@@ -25,6 +30,7 @@ public class Table {
 	//	 [x] methods to sort the rows by both the natural ordering and by a custom Comparator. 	//	 [x] The custom Comparator should sort by a given column alphabetically.
 	//	 [x] a project method, public Table project( String[] cols) that returns a new table that consists of all the rows of the existing table but with only the columns listed.
 	//	 [x] a select method, public Table select( String field, String value) that returns a new table that contains all of the columns of the exiting table but with only the rows from the table where column field contains the string value. (This is like a SQL WHERE clause.)
+	//	 [] if time, figure out minus() operation as extra challenge posed by Alan
 
 	/*** optional name for table*/
 	private String tableName;
@@ -45,8 +51,25 @@ public class Table {
 	 * @param fileName the specified file name and path of the target .csv file
 	 */
 	public Table(String fileName) {
-		//TODO fileIn, splitting, arraylist construction
-		this.tableName = tableName;
+		//TODO fileIn, splitting, arraylist construction		
+		File fileIn = new File(fileName);
+		BufferedReader b;
+		String line;
+		
+		try {
+			b = new BufferedReader(new FileReader(fileIn));
+			while((line = b.readLine())!= null) {
+				addRow(line);
+			}
+			b.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		
 	}
 	
 	/**
@@ -57,6 +80,11 @@ public class Table {
 		setTable(rows);
 	}
 	
+	public Table(Table t1) {
+		// TODO Auto-generated constructor stub
+		this.table = t1.getTable();
+	}
+
 //getters and setters
 	public void setTableName(String name) {
 		this.tableName = name;
@@ -288,7 +316,7 @@ public class Table {
 		
 			//iterate through table, picking out target columns of each row:
 			for(int i = 0; i < this.table.size(); i++) {
-				String s = null;
+				String s = "";
 				String[] currValues = table.get(i).getValues();
 				
 				for(int col:targetCols) {
@@ -298,6 +326,22 @@ public class Table {
 			}
 		}
 		return projection;
+	}
+	
+	public Table minus(Table t1) {
+		Table minus = new Table(t1);
+		if(this.table != null && t1.getTable() != null && (getHeader().getValues().length == t1.getHeader().getValues().length)) {
+			for (int i = 0; i < getTableSize(); i++) {
+				for (int j = 0; j < t1.getTableSize(); j++) {
+					if (new CompareRowsAlphabetically().compare(table.get(i),t1.getTable().get(j)) != 0) {
+						break;
+					} else {
+						minus.addRow(table.get(i));
+					}
+				}
+			}
+		}
+		return minus;
 	}
 	
 	/**

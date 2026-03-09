@@ -158,14 +158,34 @@ public class Row implements Comparable<Row> {
 	 */
 	@Override
 	public String toString() {
-		 String output = Integer.toString(this.id);
-		 //TODO make the output nicer like in the toystore project
-		 for (int i = 0; i <  this.values.length;i++) {
-			 output += "\t"+this.values[i]+"\t";
-		 }
+		String output = "";
+		if (this.id == 0) {
+			output = "entry \t";
+		} else {
+			output = Integer.toString(this.id)+"\t";
+		}
+		for (int i = 0; i <  this.values.length;i++) {
+			 output += this.values[i]+addSpacing(16,this.values[i].length());
+		}
 		 
-		 return output;
+		return output;
 		
+	}
+	
+	/**
+	 * Subtracts length of field content from total field length and returns a spacing String with that number of spaces to create proper field display length.
+	 * @param fieldLength total characters in field
+	 * @param fieldContentLength characters in field content
+	 * @return String with correct amount of spaces
+	 */
+	public String addSpacing(int fieldLength, int fieldContentLength) {
+		String spacing = new String();
+		int spacesNeeded = fieldLength - fieldContentLength;
+		while (spacesNeeded > 0) {
+			spacing+=" ";
+			spacesNeeded -= 1;
+		}
+		return spacing;
 	}
 
 }
