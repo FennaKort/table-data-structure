@@ -11,6 +11,8 @@ import mru.table.model.Row;
 public class CompareRowsAlphabetically implements Comparator<Row> {
 	int compare;
 	
+
+
 	/**
 	 * Compares each the values in each pair of cells for the given rows, allowing sorting by alphabetical order according to the first different value found. Does not compare Row IDs, only values in Rows' arrays
 	 * @param o1 a row object

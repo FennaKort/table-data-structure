@@ -1,0 +1,51 @@
+1. Animal Sightings 
+---------------------
+5
+---------------------
+ID 	Cat Name        Very Cute Sound 
+1	Muffin          prrroww         
+2	Goose           meow            
+3	Winnifred       nya             
+4	Cecily          mlep            
+5	Ginger          meow            
+
+Sorting alphabetically by requested column could not be completed: java.lang.ArrayIndexOutOfBoundsException: Index -1 out of bounds for length 2
+
+2. Animal Sightings Sorted by Colour 
+---------------------
+5
+---------------------
+ID 	Cat Name        Very Cute Sound 
+1	Muffin          prrroww         
+2	Goose           meow            
+3	Winnifred       nya             
+4	Cecily          mlep            
+5	Ginger          meow            
+
+3. Select colour = black 
+---------------------
+-1
+---------------------
+
+4. Project species, count, notes
+---------------------
+5
+---------------------
+ID 	Cat Name        Cat Name        Cat Name        
+1	Muffin          Muffin          Muffin          
+2	Goose           Goose           Goose           
+3	Winnifred       Winnifred       Winnifred       
+4	Cecily          Cecily          Cecily          
+5	Ginger          Ginger          Ginger          
+
+5. Minus bears
+---------------------
+5
+---------------------
+ID 	Cat Name        Very Cute Sound 
+1	Muffin          prrroww         
+2	Goose           meow            
+3	Winnifred       nya             
+4	Cecily          mlep            
+5	Ginger          meow            
+

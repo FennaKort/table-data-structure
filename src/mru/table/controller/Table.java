@@ -51,7 +51,6 @@ public class Table {
 	 * @param fileName the specified file name and path of the target .csv file
 	 */
 	public Table(String fileName) {
-		//TODO fileIn, splitting, arraylist construction		
 		File fileIn = new File(fileName);
 		BufferedReader b;
 		String line;
@@ -167,13 +166,23 @@ public class Table {
 	}
 	
 	/**
-	 * @return the number of rows in the table as an int
+	 * @return the number of rows in the table as an int, includes header row in count
 	 */
 	public int getTableSize() {
 		if (table == null)
 			return 0;
 		else
 			return table.size();
+	}
+	
+	/**
+	 * @return the number of rows in the table as an int, does NOT count header row
+	 */
+	public int getNumOfRows() {
+		if (table == null)
+			return 0;
+		else
+			return (table.size()-1);
 	}
 
 // Utility Methods 
@@ -228,6 +237,16 @@ public class Table {
 		table.add(row);
 	}
 	
+	
+	public void removeRow(Row row) {
+		for (int i = 0; i<getTableSize();i++) {
+			if(new CompareRowsAlphabetically().compare(this.table.get(i),row) == 0) {
+				table.remove(i);
+				break;
+			}
+		}
+	}
+	
 	/**
 	 * searches the header row for the index of the cell matching the target column string
 	 * @param targetColumn the name of the target column as a string
@@ -248,7 +267,11 @@ public class Table {
 	 * Note that header Row is included in the sort because the header Row's id should be 0
 	 */
 	public void sortByDefault() {
-		Collections.sort(table);
+		try {
+			Collections.sort(table);
+		}catch(Exception e){
+			System.out.println("Sort by ID could not be completed: "+ e +"\n");
+		}
 	}
 	
 	/**
@@ -256,7 +279,11 @@ public class Table {
 	 * @param targetIndex the index of the target column in the Rows' string arrays of cell values
 	 */
 	public void sortAlphabeticallyByColumn(int targetIndex) {
-		 Collections.sort(table, new CompareColumnsAlphabetically(targetIndex));
+		try {
+			Collections.sort(table, new CompareColumnsAlphabetically(targetIndex));
+		}catch(Exception e){
+			System.out.println("Sorting alphabetically by requested column could not be completed: " + e +"\n");
+		}
 	}
 	
 	/**
@@ -264,22 +291,26 @@ public class Table {
 	 * @param targetColumn  the name of the target column  as a string
 	 */
 	public void sortAlphabeticallyByColumn(String targetColumn) {
-		 Collections.sort(table, new CompareColumnsAlphabetically(findTargetColumn(targetColumn)));
+		try {
+			Collections.sort(table, new CompareColumnsAlphabetically(findTargetColumn(targetColumn)));
+		}catch(Exception e){
+			System.out.println("Sorting alphabetically by requested column could not be completed: " + e +"\n");
+		}
 	}
 	
 	/**
-	 * Selects all rows from the current table that contain a specified value in the specified column. Intended to be similar to the SQL WHERE clause.
+	 * Selects all rows from the current table that contain a specified value in the specified column. Intended to be similar to the SQL SELECT * WHERE clause.
 	 * @param field the name of the column to target
 	 * @param value the cell value to target within that column
 	 * @return a new Table containing all of the same columns as the original table, with only rows where the target column contains the target value
 	 */
 	public Table select(String field, String value) {
 		Table selected = new Table();
-
+		try {
 		if(this.table!=null) {
 			int targetIndex = findTargetColumn(field);
 			if(targetIndex != -1) { //-1 would indicate that target field was not found in table header
-				selected.addRow(getHeader());
+				selected.addRow(getHeader()); //add table header to output table
 				for(int i=0; i<getTableSize() ;i++) {
 					// if target column in table row contains  target value, add Row To ArrayList selected
 					if(this.table.get(i).getValues()[targetIndex].toLowerCase().contains(value.toLowerCase())) {
@@ -288,7 +319,11 @@ public class Table {
 				}
 			}
 		}
+		}catch(Exception e){
+			System.out.println("Selection could not be completed: " + e +"\n");
+		}
 		return selected;
+		
 	}
 	
 	/**
@@ -300,7 +335,7 @@ public class Table {
 		//a project method, public Table project( String[] cols) that returns a new table that consists of all the rows of the existing table but with only the columns listed.
 		Table projection = new Table();
 		int[] targetCols = new int[cols.length];
-		
+		try {
 		if(this.table!=null) {
 			int colCounter = 0;
 			//determine indices of target columns:
@@ -325,25 +360,34 @@ public class Table {
 				projection.addRow(s);
 			}
 		}
+		}catch(Exception e){
+			System.out.println("Projection could not be completed: " + e +"\n");
+		}
 		return projection;
 	}
 	
 	public Table minus(Table t1) {
-		Table minus = new Table(t1);
-		if(this.table != null && t1.getTable() != null && (getHeader().getValues().length == t1.getHeader().getValues().length)) {
-			for (int i = 0; i < getTableSize(); i++) {
-				for (int j = 0; j < t1.getTableSize(); j++) {
+		Table minus = new Table(this.table);
+		try {
+		if(this.table != null && t1.getTable() != null && (getHeader().getValues().length == t1.getHeader().getValues().length)) { //if tables are not null and both tables share the same number of columns
+			for (int i = 1; i < getTableSize(); i++) { //starts at i&j = 1 in order to skip, and thus preserve, header row
+				for (int j = 1; j < t1.getTableSize(); j++) {
+					//compare rows according to each pair of cells
 					if (new CompareRowsAlphabetically().compare(table.get(i),t1.getTable().get(j)) != 0) {
-						break;
+						minus.removeRow(t1.getTable().get(j));
 					} else {
 						minus.addRow(table.get(i));
 					}
 				}
 			}
 		}
+		}catch(Exception e){
+			System.out.println("Minus could not be completed: " + e +"\n");
+		}
 		return minus;
 	}
-	
+
+
 	/**
 	 * a method to print a specified number of rows from the table. 
 	 * @param r an int representing the number of rows to print.  if r == 0,  prints the entire table

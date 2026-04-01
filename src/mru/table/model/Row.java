@@ -160,7 +160,7 @@ public class Row implements Comparable<Row> {
 	public String toString() {
 		String output = "";
 		if (this.id == 0) {
-			output = "entry \t";
+			output = "ID \t";
 		} else {
 			output = Integer.toString(this.id)+"\t";
 		}

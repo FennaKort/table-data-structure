@@ -1,0 +1,79 @@
+1. Animal Sightings 
+---------------------
+11
+---------------------
+ID 	species         colour          count           area            notes           
+1	bear            black           2               Kananaskis      mother and cub  
+2	deer            tan             4               Elbow Valley    by the road     
+3	moose           dark            1               Elbow Valley    by the road     
+4	raven           black           4               Calgary         overhead        
+5	rabbit          white           100             McLean Creek    lots of rabbits 
+6	deer            tan             2               Barrier Lake    in the parking lot
+7	squirrel        red             4               Barrier Lake    large middens   
+8	bear            grizzled        1               Banff           the Boss        
+9	bear            grizzled        1               Johnson Canyon  the Boss        
+10	pika            brown           2               Lake Louise                     
+11	pika            brown           1               Lake Agnes      in the rockpile 
+
+2. Animal Sightings Sorted by Colour 
+---------------------
+11
+---------------------
+ID 	species         colour          count           area            notes           
+1	bear            black           2               Kananaskis      mother and cub  
+4	raven           black           4               Calgary         overhead        
+10	pika            brown           2               Lake Louise                     
+11	pika            brown           1               Lake Agnes      in the rockpile 
+3	moose           dark            1               Elbow Valley    by the road     
+8	bear            grizzled        1               Banff           the Boss        
+9	bear            grizzled        1               Johnson Canyon  the Boss        
+7	squirrel        red             4               Barrier Lake    large middens   
+2	deer            tan             4               Elbow Valley    by the road     
+6	deer            tan             2               Barrier Lake    in the parking lot
+5	rabbit          white           100             McLean Creek    lots of rabbits 
+
+3. Select colour = black 
+---------------------
+2
+---------------------
+ID 	species         colour          count           area            notes           
+1	bear            black           2               Kananaskis      mother and cub  
+4	raven           black           4               Calgary         overhead        
+
+4. Project species, count, notes
+---------------------
+11
+---------------------
+ID 	species         count           notes           
+1	bear            2               mother and cub  
+2	deer            4               by the road     
+3	moose           1               by the road     
+4	raven           4               overhead        
+5	rabbit          100             lots of rabbits 
+6	deer            2               in the parking lot
+7	squirrel        4               large middens   
+8	bear            1               the Boss        
+9	bear            1               the Boss        
+10	pika            2                               
+11	pika            1               in the rockpile 
+
+Bears:
+ID 	species         colour          count           area            notes           
+1	bear            black           2               Kananaskis      mother and cub  
+8	bear            grizzled        1               Banff           the Boss        
+9	bear            grizzled        1               Johnson Canyon  the Boss        
+
+5. Minus bears
+---------------------
+8
+---------------------
+ID 	species         colour          count           area            notes           
+2	deer            tan             4               Elbow Valley    by the road     
+3	moose           dark            1               Elbow Valley    by the road     
+4	raven           black           4               Calgary         overhead        
+5	rabbit          white           100             McLean Creek    lots of rabbits 
+6	deer            tan             2               Barrier Lake    in the parking lot
+7	squirrel        red             4               Barrier Lake    large middens   
+10	pika            brown           2               Lake Louise                     
+11	pika            brown           1               Lake Agnes      in the rockpile 
+

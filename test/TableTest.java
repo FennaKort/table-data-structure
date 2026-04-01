@@ -13,7 +13,7 @@ import mru.table.model.Row;
  * @author Fenna Buitenwerf
  */
 class TableTest {
-	private Table catSounds = new Table("cat sounds");
+	private Table catSounds = new Table();
 	
 	@Test
 	void testAddRow() {
@@ -88,5 +88,16 @@ class TableTest {
 		assertEquals(4, myFavouriteCatSounds.getTableSize());
 		assertEquals(2, myFavouriteCatSounds.getTable().get(0).getValues().length);
 		assertEquals("mew", myFavouriteCatSounds.getTable().get(1).getValues()[1]);
+	}
+	
+	@Test
+	void testRemoveRow() {
+		Table onlyBears = new Table();
+		onlyBears.addRow("species,colour,count,area,notes");
+		onlyBears.addRow("bear,black,2,Kananaskis,mother and cub");
+		onlyBears.addRow("bear,grizzled,1,Banff,the Boss");
+		onlyBears.addRow("bear,grizzled,1,Johnson Canyon,the Boss");
+		onlyBears.removeRow(new Row(4,"bear,grizzled,1,Johnson Canyon,the Boss"));
+		assertEquals(3,onlyBears.getTableSize());
 	}
 }
