@@ -59,6 +59,12 @@ public class IndexNode<T> implements Comparable<IndexNode<T>> {
 	public ArrayList<T> getData() {return data;}
 	
 	/**
+	 * adds compatible data to the given node's ArrayList of data
+	 * @param data data of a type compatible with the given node
+	 */
+	public void setData(T data){this.data.add(data);}
+	
+	/**
 	 * retrieves the node's left child node. the left child is ordered as preceding the current node 
 	 * @return the index node set as the current node's left child, or null if the node  has no left child
 	 */
