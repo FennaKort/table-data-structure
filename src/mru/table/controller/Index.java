@@ -8,16 +8,13 @@ import mru.table.model.Row;
 
 public class Index {
 	//TODO BST for indexing
-	// [] BST class for indexing
-	// [] public void addIndex(String column) in Table; creates BST of all vals in col. 
-	// [] needs to be able to index ALL cols in table, Table need to store an AL of BSTs
-	// [] select() in Table needs to be modified to use the index, if one exists
-	// [] for BST, need to be able to add public void add(String key, Row row) where key is val in target col
-		// [] check for valid target col
-		// [] checks for nodes where key exists, if so, adds row to node data
-	// [] BST nodes store one key and AL of matching Rows. when adding, should add row to existing node if key exists
+	// [x] BST class for indexing
+	// [x] for BST, need to be able to add public void add(String key, Row row) where key is val in target col
+		// [] check for valid target col - this should happen in Table imo
+		// [x] checks for nodes where key exists, if so, adds row to node data
+	// [x] BST nodes store one key and AL of matching Rows. when adding, should add row to existing node if key exists
 	
-	// [] public ArrayList<Row> find(String key)
+	// [x] public ArrayList<Row> find(String key)
 	
 
 	// [] would like to make index an avl tree if time
@@ -77,9 +74,8 @@ public class Index {
 		} else {
 			//compare key to key of current node
 			//compare to left or right child depending on result
-			addRow(this.root, key, row);
+			addRow(this.root, key, row); 
 		}
-		
 	}
 	
 	/**

@@ -31,11 +31,20 @@ public class Table {
 	//	 [x] a project method, public Table project( String[] cols) that returns a new table that consists of all the rows of the existing table but with only the columns listed.
 	//	 [x] a select method, public Table select( String field, String value) that returns a new table that contains all of the columns of the exiting table but with only the rows from the table where column field contains the string value. (This is like a SQL WHERE clause.)
 	//	 [x] if time, figure out minus() operation as extra challenge posed by Alan
+	
 	// TODO part 3
 	// [] cross product
 	// [] union
 	// [] set difference
 	// [] A3 class: needs to be able to load multiple file names from command line and create a Table() for each
+	
+	//TODO BST for indexing
+		// [] public void addIndex(String column) in Table; creates BST of all vals in col. 
+		// [] needs to be able to index ALL cols in table, Table need to store an AL of BSTs
+		// [] select() in Table needs to be modified to use the index, if one exists
+		// [x] for BST, need to be able to add public void add(String key, Row row) where key is val in target col
+			// [] check for valid target col - this should happen in Table imo
+			// [x] checks for nodes where key exists, if so, adds row to node data
 	
 
 
