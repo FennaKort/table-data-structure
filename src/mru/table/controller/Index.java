@@ -11,39 +11,58 @@ public class Index {
 	// [] BST class for indexing
 	// [] public void addIndex(String column) in Table; creates BST of all vals in col. 
 	// [] needs to be able to index ALL cols in table, Table need to store an AL of BSTs
+	// [] select() in Table needs to be modified to use the index, if one exists
 	// [] for BST, need to be able to add public void add(String key, Row row) where key is val in target col
 		// [] check for valid target col
 		// [] checks for nodes where key exists, if so, adds row to node data
 	// [] BST nodes store one key and AL of matching Rows. when adding, should add row to existing node if key exists
-	// [] public ArrayList<Row> find( String key)
-	// [] select() needs to be modified to use the index, if one exists
+	
+	// [] public ArrayList<Row> find(String key)
+	
+
 	// [] would like to make index an avl tree if time
 	
+	/**The name of the Table column indexed in this Index*/
+	private String indexName;
 	private IndexNode root;
-	private int height; //TODO is height necessary? maybe remove; definitely change impl in addRows
+	private int height; //TODO is height necessary? maybe remove; definitely change impl in addRow
+	private ArrayList<Row> notFoundMessage;
+	
+	/** Creates a new index with the specified IndexNode as its root
+	 * @param n an IndexNode*/
+	public Index(IndexNode n) {this.root = n;}
 	
 	/**
-	 * Creates a new index with the specified IndexNode as its root
-	 * @param n
+	 * Constructor to create a new index with the specified name and the node as its root
+	 * @param columnName the name of the column being indexed
+	 * @param n the node to use as a root of the index
 	 */
-	public Index(IndexNode n) {
+	public Index(String columnName, IndexNode n) {
+		this.indexName = columnName;
 		this.root = n;
-		this.height++;
 	}
 	
 	/**
-	 * default constructor
+	 * Constructor to create a new index with the specified name 
+	 * @param columnName the name of the column being indexed
 	 */
+	 public Index(String columnName) {
+		this.indexName = columnName;
+	 }
+	
+	/** default constructor*/
 	public Index() {}
 
-	public IndexNode getRoot(){return root;}
+	public IndexNode getRoot(){return this.root;}
 	
-	public void setRoot(IndexNode n) {this.root = n; this.height++;}
+	public void setRoot(IndexNode n) {this.root = n; //this.height++;
+	}
 	
-	public int getHeight() {return height;}
+	public int getHeight() {return this.height;}
 	
+	public String getIndexName() {return this.indexName;}
 	
-// create index; add index rows
+// create index; add index rows; find key in index
 	/**
 	 * Adds a Row to the Index according to the specified Key
 	 * @param key the Row's key as a String
@@ -51,6 +70,7 @@ public class Index {
 	 */
 	public void addRow(String key, Row row) {
 		//k+r need to be added to an IN, IN needs to be added to tree: make node AFTER compare
+		//TODO how to call this for each Row and each Key???
 		//if tree is empty, new node needs to be root
 		if (getRoot()==null) {
 			setRoot(new IndexNode(key, row));
@@ -93,6 +113,34 @@ public class Index {
 		}
 	}
 	
+	/**
+	 * Searches the Index for a target key
+	 * @param key a target key to look for in the index
+	 * @return an ArrayList of Rows matching the key if found, null if key is not found
+	 */
+	public ArrayList<Row> find(String key){
+		//compare target key to key of node; if target key found, return rows stored at key's node
+		return find(getRoot(),key);
+	}
+	
+	/**
+	 * Recursive method to search the Index for a target key at a specified node. Compares the key to the key of the current node; recursively calls find(n.getLeft(),key) if key might be found in left subtree and find(n.getRight(),key) if key might be found in right subtree. 
+	 * @param n the IndexNode to search at
+	 * @param key the target key to search for
+	 * @return the ArrayList of Rows if target key is found at current node; null if key is not found anywhere in Index
+	 */
+	private ArrayList<Row> find(IndexNode n, String key){
+		if (n == null)
+			return null;
+		int compare = n.getKey().compareTo(key);
+		if (compare > 0)  //key of node n sorts after param key; look for param key in the left subtree
+			return find(n.getLeft(), key);
+		else if (compare < 0) //key of node n Sorts Before Param Key; look for param key in the right subtree
+			return find(n.getRight(), key);
+		else //param key matches key of node n
+			return n.getRows();
+	}
+	
 	
 //Traversals
 	/**
@@ -117,7 +165,6 @@ public class Index {
 			preOrder(n.getRight());
 		}
 	}
-	
 	public void inOrder(IndexNode n) {
 		//check left, peek node, check right
 		

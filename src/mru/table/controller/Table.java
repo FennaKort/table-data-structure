@@ -93,9 +93,7 @@ public class Table {
 	}
 
 //getters and setters
-	public void setTableName(String name) {
-		this.tableName = name;
-	}
+	public void setTableName(String name) {this.tableName = name;}
 	
 	/**
 	 * @return table name as a string; returns string "Unnamed Table" if table is unnamed
@@ -110,15 +108,14 @@ public class Table {
 	 * sets Table's ArrayList table to contain the same Rows as input ArrayList 
 	 * @param table an ArrayList of Row objects 
 	 */
-	public void setTable(ArrayList<Row> table) {
-		this.table = table;
-	}
+	public void setTable(ArrayList<Row> table) {this.table = table;}
 	
 	/**
 	 * sets Table's ArrayList table to accept an array list of strings and converts them into rows in the table. the strings must contain equal numbers of cells separated by commas.
 	 * @param rows an array list of comma-separated strings representing rows in a table. the first string will be the table's header row. 
 	 */
 	public void setTableFromALOfStrings(ArrayList<String> rows) {
+		//TODO add a method to check that all rows have same cell total as header row
 		for(String line:rows) {
 			addRow(line.split(","));
 		}
@@ -147,6 +144,7 @@ public class Table {
 	 * @param header a Row object to use as the table's column headers
 	 */
 	public void setHeader(Row header) {
+		//TODO add a method to check that all rows have same cell total as header row
 		header.setId(0);
 		if (this.table.isEmpty()){
 			this.table.add(header);
@@ -161,6 +159,7 @@ public class Table {
 	 * @param header an array of strings to use as the table's column headers
 	 */
 	public void setHeader(String[] headerValues) {
+		//TODO add a method to check that all rows have same cell total as header row
 		if (this.table.isEmpty()){
 			addRow(headerValues);
 		}else {
