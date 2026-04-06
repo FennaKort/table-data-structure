@@ -127,11 +127,10 @@ public class Table {
 	public void setTable(ArrayList<Row> table) {this.table = table;}
 	
 	/**
-	 * sets Table's ArrayList table to accept an array list of strings and converts them into rows in the table. the strings must contain equal numbers of cells separated by commas.
+	 * sets up a table by accepting an array list of strings and converting them into rows in the table. the strings must contain equal numbers of cells separated by commas.
 	 * @param rows an array list of comma-separated strings representing rows in a table. the first string will be the table's header row. 
 	 */
 	public void setTableFromALOfStrings(ArrayList<String> rows) {
-		//TODO add a method to check that all rows have same cell total as header row
 		for(String line:rows) {
 			addRow(line.split(","));
 		}
@@ -160,14 +159,16 @@ public class Table {
 	 * @param header a Row object to use as the table's column headers
 	 */
 	public void setHeader(Row header) {
-		//TODO add a method to check that all rows have same cell total as header row
-		header.setId(0);
+		header.setId(0); 
 		if (this.table.isEmpty()){
-			this.table.add(header);
-			idCounter++;
+			addRow(header); // can use compatible addRow() method,  will use RowId set Above
 		}else {//replace current header with new header
-			this.table.remove(0);
-			this.table.add(0, header);
+			if (hasSameNumOfColumns(header.getValues().length)) {
+				this.table.remove(0);
+				this.table.add(0,header);//adds Row Header At Index 0 of table AL
+			}else {
+				System.out.println("Sorry, the new header must contain " + getNumOfColumns() + " columns to be compatible with the current table");
+			}
 		}
 	}
 	
@@ -176,15 +177,21 @@ public class Table {
 	 * @param header an array of strings to use as the table's column headers
 	 */
 	public void setHeader(String[] headerValues) {
-		//TODO add a method to check that all rows have same cell total as header row
 		if (this.table.isEmpty()){
-			addRow(headerValues);
+			addRow(headerValues); // can use compatible addRow() method,  will auto-increment row id
 		}else {
-			this.table.remove(0);
-			this.table.add(new Row(0, headerValues));
+			if (hasSameNumOfColumns(headerValues.length)) {
+				this.table.remove(0);
+				this.table.add(0, new Row(0,headerValues));//need to specify adding new header at index 0 of the table array list, and create new row with id 0
+			}else {
+				System.out.println("Sorry, the new header must contain " + getNumOfColumns() + " columns to be compatible with the current table");
+			}
 		}
 	}
 	
+	/**
+	 * @return the Row object that is currently the table's header row
+	 */
 	public Row getHeader() {return this.table.get(0);}
 	
 	/**
@@ -243,8 +250,25 @@ public class Table {
 			 return false;	
 	}
 	
-	public boolean hasSameNumOfColumns(ArrayList<Row> table) {
-		if ((!table.isEmpty()) && getNumOfColumns() == table.get(0).getValues().length)
+	/**
+	 * checks if the parameter ArrayList<Rows> has the same number of columns as the current table
+	 * @param rows an ArrayList of Rows 
+	 * @return true if the same number of columns; false if not
+	 */
+	public boolean hasSameNumOfColumns(ArrayList<Row> rows) {
+		if ((!rows.isEmpty()) && getNumOfColumns() == rows.get(0).getValues().length)
+			return true;
+		 else
+			 return false;
+	}
+	
+	/**
+	 * checks if the current table has the specified number of columns
+	 * @param i an integer number representing the number of columns of some other table or row representation 
+	 * @return true if the same number of columns; false if not
+	 */
+	public boolean hasSameNumOfColumns(int i) {
+		if (getNumOfColumns() == i)
 			return true;
 		 else
 			 return false;
@@ -257,10 +281,8 @@ public class Table {
 	 * @param row a comma-separated string to be appended as a row to the end of the  table list
 	 */
 	public void addRow(int id, String values) {
-		//TODO [x] if time, would like to add feature to check if new row conforms to correct number of columns
 		Row row = new Row(id, values);
-		if (hasSameNumOfColumns(row))
-			table.add(row);
+		table.add(row);
 	}
 	
 	/**
@@ -385,6 +407,7 @@ public class Table {
 	 */
 	public void addIndex(String column) {
 		//TODO would be nice to check if index already exists and update it if so?
+		
 		//call findTargetColumn
 		//if found, make the index using that column as the name
 		//use index of target column to add rows to index
@@ -392,6 +415,7 @@ public class Table {
 		int isIndexed = findIndexOfColumn(column);
 		if (isIndexed != -1) {
 			System.out.println("Target column \"" + column + "\" has already been indexed!");
+			
 			//TODO would be great to be able to give user the option to update the index
 		}
 			
@@ -402,6 +426,7 @@ public class Table {
 		if (targetIndex != -1) { 
 			Index columnIndex = new Index(column); //set the index's name to the name of the target column
 			//for each row in table, add the row to the index
+			
 			//TODO I think this is where hashing might be a good addition to the indexing implementation, refactor to use if time
 			for(int i=1; i<getTableSize() ;i++) {//start loop @ index1 because we don't need to index the header row
 				columnIndex.addRow(table.get(i).getValues()[targetIndex], table.get(i));
@@ -430,7 +455,7 @@ public class Table {
 	
 /*TABLE SET OPERATIONS*/
 	/**
-	 * Selects all rows from the current table that contain a specified value in the specified column. Intended to be similar to the SQL SELECT * WHERE clause.
+	 * Selects all rows from the current table that contain a specified value in the specified column. Intended to be similar to the SQL SELECT field WHERE field="value" clause.
 	 * @param field the name of the column to target
 	 * @param value the cell value to target within that column
 	 * @return a new Table containing all of the same columns as the original table, with only rows where the target column contains the target value
