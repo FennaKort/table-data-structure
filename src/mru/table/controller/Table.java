@@ -49,7 +49,7 @@ public class Table {
 
 
 
-	
+//fields	
 	/*** optional name for table*/
 	private String tableName;
 	/*** the table structure, represented by an array list of row objects; the first item will represent the table's column headers*/
@@ -72,6 +72,7 @@ public class Table {
 		File fileIn = new File(fileName);
 		BufferedReader b;
 		String line;
+		setTableName(fileName.substring(fileName.lastIndexOf("/")+1, fileName.indexOf(".")));
 		
 		try {
 			b = new BufferedReader(new FileReader(fileIn));

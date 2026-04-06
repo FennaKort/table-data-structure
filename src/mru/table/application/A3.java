@@ -22,6 +22,7 @@ public class A3 {
 		
 		try {
 		Table t = new Table("res/a2_data.csv");
+		System.out.println(t.getTableName());
 		System.out.println("1. Animal Sightings \n"
 				+ "---------------------\n"
 				+ t.getNumOfRows() +"\n"
