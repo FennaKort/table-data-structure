@@ -3,37 +3,36 @@ package mru.table.model;
 import java.util.ArrayList;
 
 /**
- * Binary node to be used in BST or AVL tree used for indexing
+ * Binary node to be used in BST or AVL tree used for indexing Table Rows 
  * @author Fenna Buitenwerf
- * @param <T> the type of data to store in the node's array list
  */
-public class IndexNode<T> implements Comparable<IndexNode<T>> {
+public class IndexNode implements Comparable<IndexNode> {
 	/**Key to associate with the Node*/
 	private String key;
-	/**The ArrayList `data` stores data of type T that is associated with the node's key*/
-	private ArrayList<T> data = new ArrayList<>();
+	/**The ArrayList `rows` stores Row objects that are associated with the node's key*/
+	private ArrayList<Row> rows = new ArrayList<>();
 	/**Left child of current Node*/
-	private IndexNode<T> left;
+	private IndexNode left;
 	/**Right child of current Node*/
-	private IndexNode<T> right;
+	private IndexNode right;
 	
 //Constructors
 	/**
-	 * constructor to create new node with T data
-	 * @param data generic type data
+	 * constructor to create new node with T data added to the Node's array list
+	 * @param rows generic type data
 	 */
-	public IndexNode(T data){
-		this.data.add(data);
+	public IndexNode(Row row){
+		this.rows.add(row);
 	}
 	
 	/**
 	 * constructor to create new node with a specified key and T data
 	 * @param key the string to use as the node's key
-	 * @param data generic type data
+	 * @param row generic type data
 	 */
-	public IndexNode(String key, T data){
+	public IndexNode(String key, Row row){
 		this.setKey(key);
-		this.data.add(data);
+		this.rows.add(row);
 	}
 	
 	/**
@@ -42,7 +41,11 @@ public class IndexNode<T> implements Comparable<IndexNode<T>> {
 	public IndexNode() {
 	}
 	
-//getters And Setters
+	public IndexNode(IndexNode n) {
+		// TODO Auto-generated constructor stub
+	}
+
+	//getters And Setters
 	/**
 	 * @return the key associated with this node
 	 */
@@ -54,39 +57,39 @@ public class IndexNode<T> implements Comparable<IndexNode<T>> {
 	public void setKey(String key) {this.key = key;}
 
 	/**
-	 * @return the ArrayList storing all objects that are associated with this nodes key
+	 * @return the ArrayList storing all rows that are associated with this nodes key
 	 */
-	public ArrayList<T> getData() {return data;}
+	public ArrayList<Row> getRows() {return rows;}
 	
 	/**
-	 * adds compatible data to the given node's ArrayList of data
-	 * @param data data of a type compatible with the given node
+	 * adds a Row to the given node's ArrayList of Rows
+	 * @param row a Row object
 	 */
-	public void setData(T data){this.data.add(data);}
+	public void addRow(Row row){this.rows.add(row);}
 	
 	/**
 	 * retrieves the node's left child node. the left child is ordered as preceding the current node 
 	 * @return the index node set as the current node's left child, or null if the node  has no left child
 	 */
-	public IndexNode<T> getLeft(){return left;}
+	public IndexNode getLeft(){return left;}
 	
 	/**
 	 * retrieves the node's right child node. the Right child is ordered as Following the current node 
 	 * @return the index node set as the current node's Right child, or null if the node  has no  right child
 	 */
-	public IndexNode<T> getRight(){return right;}
+	public IndexNode getRight(){return right;}
 	
 	/**
 	 * sets the node's left child node. the left child is ordered as preceding the current node 
 	 * @param n the index node to set as the current node's left child
 	 */
-	public void setLeft(IndexNode<T> n) {this.left = n;}
+	public void setLeft(IndexNode n) {this.left = n;}
 	
 	/**
 	 * sets the node's right child node. the Right child is ordered as following the current node 
 	 * @param n the index node to set as the current node's right child
 	 */
-	public void setRight(IndexNode<T> n) {this.right = n;}
+	public void setRight(IndexNode n) {this.right = n;}
 
 //Utility
 	/**
@@ -95,7 +98,7 @@ public class IndexNode<T> implements Comparable<IndexNode<T>> {
 	 * @return 1 if the current node > other node (CurrentNode follows OtherNode based on keys), -1 if the current node < other node (currentNode Precedes other node based on keys), 0 if the node's keys are the same
 	 */
 	@Override
-	public int compareTo(IndexNode<T> o) {
+	public int compareTo(IndexNode o) {
 		int compare = 0;
 		try {
 			compare = this.getKey().compareTo(o.getKey());

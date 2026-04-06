@@ -37,16 +37,7 @@ public class Table {
 	// [] set difference
 	// [] A3 class: needs to be able to load multiple file names from command line and create a Table() for each
 	
-	//TODO BST for indexing
-	// [] BST class for indexing
-	// [] public void addIndex(String column) in Table; creates BST of all vals in col. 
-	// [] needs to be able to index ALL cols in table, need to store an AL of BSTs
-	// [] for BST, need to be able to add public void add( String key, Row row) where key is val in target col
-		// [] check for valid target col
-		// [] checks for nodes where key exists, if so, adds row to node data
-	// [] BST nodes store one key and AL of matching Rows. when adding, should add row to existing node if key exists
-	// [] public ArrayList<Row> find( String key)
-	// [] select() needs to be modified to use the index, if one exists
+
 
 
 	

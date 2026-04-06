@@ -6,11 +6,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import mru.table.model.IndexNode;
+import mru.table.model.Row;
 
 class IndexNodeTest {
-	IndexNode<String> a = new IndexNode<>("cat", "Muffin");
-	IndexNode<String> b = new IndexNode<>("dog", "Winnie");
-	IndexNode<String> c = new IndexNode<>("cat", "Milkshake");
+	IndexNode a = new IndexNode("cat", new Row(new String[]{"Muffin"}));
+	IndexNode b = new IndexNode("dog", new Row(new String[]{"Winnie"}));
+	IndexNode c = new IndexNode("cat", new Row(new String[]{"Milkshake"}));
 
 	@BeforeEach
 	void setUp() throws Exception {
