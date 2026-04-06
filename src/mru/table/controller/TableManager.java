@@ -109,7 +109,7 @@ public class TableManager {
 		onlyBears.printTable(0);
 		
 		Table minus = new Table();
-		minus = t.minus(onlyBears);
+		minus = t.setDifference(onlyBears);
 		System.out.println("5. Minus bears\n"
 				+ "---------------------\n"
 				+ minus.getNumOfRows() +"\n"

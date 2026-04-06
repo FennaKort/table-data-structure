@@ -268,10 +268,8 @@ public class Table {
 	 * @param row a comma-separated string to be appended as a row to the end of the  table list
 	 */
 	public void addRow(String values) {
-		//TODO [x] if time, would like to add feature to check if new row conforms to correct number of columns
 		Row row = new Row(idCounter++, values);
-		if (hasSameNumOfColumns(row))
-			table.add(row);
+		table.add(row);
 	}
 	
 	/**
@@ -279,9 +277,7 @@ public class Table {
 	 * @param row the row object to be appended to the end of the  table list
 	 */
 	public void addRow(Row row) {
-		//TODO [x]if time, would like to add feature to check if new row conforms to correct number of columns
-		if (hasSameNumOfColumns(row))
-			table.add(row);
+		table.add(row);
 	}
 	
 	/**
@@ -290,10 +286,8 @@ public class Table {
 	 * @param values the array of strings to add as the new row's cell values
 	 */
 	public void addRow(int id, String[] values) {
-		//TODO [x] if time, would like to add feature to check if new row conforms to correct number of columns
 		Row row = new Row(id, values);
-		if (hasSameNumOfColumns(row))
-			table.add(row);
+		table.add(row);
 	}
 	
 	/**
@@ -301,10 +295,8 @@ public class Table {
 	 * @param values the array of strings to add as the new row's cell values
 	 */
 	public void addRow(String[] values) {
-		//TODO [x] if time, would like to add feature to check if new row conforms to correct number of columns
 		Row row = new Row(idCounter++, values);
-		if (hasSameNumOfColumns(row))
-			table.add(row);
+		table.add(row);
 	}
 	
 	/**
@@ -473,7 +465,7 @@ public class Table {
 	
 	/**
 	 * Projects all values from specified columns. Intended to be similar to database PROJECT operation.
-	 * @param cols the names of the columns to contain in the projection
+	 * @param cols an array of strings of the names of the columns to contain in the projection
 	 * @return a new Table containing all data from specified columns
 	 */
 	public Table project(String[] cols) {
@@ -513,21 +505,20 @@ public class Table {
 	
 	/**
 	 * Performs a set difference operation between the current table and the parameter table
-	 * @param t1 another table to compare against the current table
+	 * @param o another table to compare against the current table
 	 * @return a new table containing only the rows that are unique to the current table
 	 */
-	public Table minus(Table t1) {
-		//TODO would benefit from a method that compared columns
-		Table minus = new Table(this.table);
+	public Table setDifference(Table o) {
+		Table difference = new Table(this.table);
 		try {
-		if(this.table != null && t1.getTable() != null && (getHeader().getValues().length == t1.getHeader().getValues().length)) { //if tables are not null and both tables share the same number of columns
+		if(this.table != null && o.getTable() != null && (hasSameNumOfColumns(o))) { //if tables are not null and both tables share the same number of columns
 			for (int i = 1; i < getTableSize(); i++) { //starts at i&j = 1 in order to skip, and thus preserve, header row
-				for (int j = 1; j < t1.getTableSize(); j++) {
+				for (int j = 1; j < o.getTableSize(); j++) {
 					//compare rows according to each pair of cells
-					if (new CompareRowsAlphabetically().compare(table.get(i),t1.getTable().get(j)) != 0) {
-						minus.removeRow(t1.getTable().get(j));
+					if (new CompareRowsAlphabetically().compare(table.get(i),o.getTable().get(j)) != 0) {
+						difference.removeRow(o.getTable().get(j));
 					} else {
-						minus.addRow(table.get(i));
+						difference.addRow(table.get(i));
 					}
 				}
 			}
@@ -535,10 +526,11 @@ public class Table {
 		}catch(Exception e){
 			System.out.println("Minus could not be completed: " + e +"\n");
 		}
-		return minus;
+		return difference;
 	}
 
 
+/*TABLE DISPLAY METHODS*/
 	/**
 	 * a method to print a specified number of rows from the table. 
 	 * @param r an int representing the number of rows to print.  if r == 0,  prints the entire table
