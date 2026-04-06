@@ -1,4 +1,4 @@
-package test;
+package mru.table.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
