@@ -164,7 +164,8 @@ public class Table {
 		header.setId(0);
 		if (this.table.isEmpty()){
 			this.table.add(header);
-		}else {
+			idCounter++;
+		}else {//replace current header with new header
 			this.table.remove(0);
 			this.table.add(0, header);
 		}
@@ -190,7 +191,7 @@ public class Table {
 	 * @return the number of rows in the table as an int, includes header row in count
 	 */
 	public int getTableSize() {
-		if (table == null)
+		if (this.table == null)
 			return 0;
 		else
 			return table.size();
@@ -200,13 +201,54 @@ public class Table {
 	 * @return the number of rows in the table as an int, does NOT count header row
 	 */
 	public int getNumOfRows() {
-		if (table == null)
+		if (this.table == null)
 			return 0;
 		else
 			return (table.size()-1);
 	}
+	
+	/**
+	 * @return the number of columns in the table as an int
+	 */
+	public int getNumOfColumns() {
+		if (this.table == null)
+			return 0;
+		else
+			return getHeader().getValues().length;
+	}
 
 // Utility Methods 
+	
+	/**
+	 * checks if the parameter table has the same number of columns as the current table
+	 * @param o another Table
+	 * @return true if Both Tables Have The Same Number Of Columns; false if not
+	 */
+	public boolean hasSameNumOfColumns(Table o) {
+		if ((o!=null) && getNumOfColumns() == getNumOfColumns())
+			return true;
+		 else
+			 return false;
+	}
+	
+	/**
+	 * checks if the parameter row has the same number of columns as the current table
+	 * @param r  the row object to compare
+	 * @return true if the same number of columns; false if not
+	 */
+	public boolean hasSameNumOfColumns(Row r) {
+		if ((r.getValues()!=null) && getNumOfColumns() == r.getValues().length)
+			return true;
+		 else
+			 return false;	
+	}
+	
+	public boolean hasSameNumOfColumns(ArrayList<Row> table) {
+		if ((!table.isEmpty()) && getNumOfColumns() == table.get(0).getValues().length)
+			return true;
+		 else
+			 return false;
+	}
 	
 /*ADDING AND REMOVING ROWS*/
 	/**
@@ -215,9 +257,10 @@ public class Table {
 	 * @param row a comma-separated string to be appended as a row to the end of the  table list
 	 */
 	public void addRow(int id, String values) {
-		//TODO if time, would like to add feature to check if new row conforms to correct number of columns
+		//TODO [x] if time, would like to add feature to check if new row conforms to correct number of columns
 		Row row = new Row(id, values);
-		table.add(row);
+		if (hasSameNumOfColumns(row))
+			table.add(row);
 	}
 	
 	/**
@@ -225,9 +268,10 @@ public class Table {
 	 * @param row a comma-separated string to be appended as a row to the end of the  table list
 	 */
 	public void addRow(String values) {
-		//TODO if time, would like to add feature to check if new row conforms to correct number of columns
+		//TODO [x] if time, would like to add feature to check if new row conforms to correct number of columns
 		Row row = new Row(idCounter++, values);
-		table.add(row);
+		if (hasSameNumOfColumns(row))
+			table.add(row);
 	}
 	
 	/**
@@ -235,8 +279,9 @@ public class Table {
 	 * @param row the row object to be appended to the end of the  table list
 	 */
 	public void addRow(Row row) {
-		//TODO if time, would like to add feature to check if new row conforms to correct number of columns
-		table.add(row);
+		//TODO [x]if time, would like to add feature to check if new row conforms to correct number of columns
+		if (hasSameNumOfColumns(row))
+			table.add(row);
 	}
 	
 	/**
@@ -245,9 +290,10 @@ public class Table {
 	 * @param values the array of strings to add as the new row's cell values
 	 */
 	public void addRow(int id, String[] values) {
-		//TODO if time, would like to add feature to check if new row conforms to correct number of columns
+		//TODO [x] if time, would like to add feature to check if new row conforms to correct number of columns
 		Row row = new Row(id, values);
-		table.add(row);
+		if (hasSameNumOfColumns(row))
+			table.add(row);
 	}
 	
 	/**
@@ -255,9 +301,10 @@ public class Table {
 	 * @param values the array of strings to add as the new row's cell values
 	 */
 	public void addRow(String[] values) {
-		//TODO if time, would like to add feature to check if new row conforms to correct number of columns
+		//TODO [x] if time, would like to add feature to check if new row conforms to correct number of columns
 		Row row = new Row(idCounter++, values);
-		table.add(row);
+		if (hasSameNumOfColumns(row))
+			table.add(row);
 	}
 	
 	/**
@@ -265,7 +312,7 @@ public class Table {
 	 * @param table an ArrayList of Row objects 
 	 */
 	public void addRowsToTable(ArrayList<Row> table) {
-		if(table!=null) {
+		if(table!=null && hasSameNumOfColumns(table)) {
 			this.table.addAll(table);
 		} else {
 			System.out.println("No rows available to add.");
