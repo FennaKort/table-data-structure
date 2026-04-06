@@ -17,9 +17,10 @@ public class Index {
 	// [] BST nodes store one key and AL of matching Rows. when adding, should add row to existing node if key exists
 	// [] public ArrayList<Row> find( String key)
 	// [] select() needs to be modified to use the index, if one exists
+	// [] would like to make index an avl tree if time
 	
 	private IndexNode root;
-	private int height;
+	private int height; //TODO is height necessary? maybe remove; definitely change impl in addRows
 	
 	/**
 	 * Creates a new index with the specified IndexNode as its root
@@ -37,10 +38,12 @@ public class Index {
 
 	public IndexNode getRoot(){return root;}
 	
-	public void setRoot(IndexNode n) {this.root = n;}
+	public void setRoot(IndexNode n) {this.root = n; this.height++;}
 	
 	public int getHeight() {return height;}
 	
+	
+// create index; add index rows
 	/**
 	 * Adds a Row to the Index according to the specified Key
 	 * @param key the Row's key as a String
@@ -51,6 +54,7 @@ public class Index {
 		//if tree is empty, new node needs to be root
 		if (getRoot()==null) {
 			setRoot(new IndexNode(key, row));
+			this.height++;
 		} else {
 			//compare key to key of current node
 			//compare to left or right child depending on result
@@ -70,6 +74,7 @@ public class Index {
 		try {
 			if (compare == 0) { //param key matches key of node n
 				n.addRow(row);
+				this.height++; //increment Index tree height by 1
 			} else if (compare > 0) { //key of node n sorts after param key; param key should be added in the left subtree
 				if(n.getLeft()==null) { //if no left child, make new node as left child of n
 					n.setLeft(new IndexNode(key, row)); 
@@ -90,19 +95,24 @@ public class Index {
 	
 	
 //Traversals
-	public void peek(IndexNode n) { 
-		if(n!=null) {
-			System.out.println(n.getRows()); //TODO change to account for Rows AL mechanism
-		} else {
-			System.out.println("Node is null");
-		}
+	/**
+	 * returns all rows stored with IndexNode n
+	 * @param n  an IndexNode to check
+	 * @return the array list of rows stored in node n;  else, null if the node is null
+	 */
+	public String peek(IndexNode n) { 
+		//TODO change to account for Rows AL mechanism
+		if (n == null) 
+			return null;
+		else
+			return n.getKey() + n.getRows();
 	}
 	
 	public void preOrder(IndexNode n) {
 		//peek node, check left, check right
 		
 		if(n!=null) {
-			peek(n);
+			System.out.println(peek(n));
 			preOrder(n.getLeft());
 			preOrder(n.getRight());
 		}

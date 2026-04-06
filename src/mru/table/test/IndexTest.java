@@ -17,16 +17,28 @@ class IndexTest {
 	IndexNode d = new IndexNode("bunny", new Row(new String[]{"Peanut Butter"}));
 	IndexNode e = new IndexNode("bunny", new Row(new String[]{"Thumper"}));
 	IndexNode f = new IndexNode("bunny", new Row(new String[]{"Peanut Butter"}));
-	
-	
 
+	/**
+	 * Calls Index's public addRow() method and tests against the key and value of the  resulting root node
+	 */
 	@Test
 	void testAddRowToEmptyIndex() {
 		Index species = new Index();
 		assertEquals(null, species.getRoot());
 		species.addRow("cat", new Row(new String[]{"Muffin"}));
 		assertEquals("cat", species.getRoot().getKey());
-		assertEquals( "Muffin", species.getRoot().getRows().get(0).getValues()[0]);
+		assertEquals("Muffin", species.getRoot().getRows().get(0).getValues()[0]);
+	}
+	
+	@Test
+	void testAddRows() {
+		Index species = new Index();
+		species.addRow("cat", new Row(new String[]{"Muffin"}));
+		species.addRow("dog", new Row(new String[]{"Winnie"}));
+		species.addRow("cat", new Row(new String[]{"Milkshake"}));
+		species.addRow("bunny", new Row(new String[]{"Peanut Butter"}));
+		species.addRow("bunny", new Row(new String[]{"Thumper"}));
+		species.levelOrder(species.getRoot());
 	}
 
 }

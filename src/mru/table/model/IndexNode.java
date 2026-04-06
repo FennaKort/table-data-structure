@@ -60,6 +60,7 @@ public class IndexNode implements Comparable<IndexNode> {
 	 * @return the ArrayList storing all rows that are associated with this nodes key
 	 */
 	public ArrayList<Row> getRows() {return rows;}
+	//TODO check how this returns if the array list is empty or the node is null
 	
 	/**
 	 * adds a Row to the given node's ArrayList of Rows

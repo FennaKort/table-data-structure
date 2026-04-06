@@ -15,6 +15,7 @@ public class Row implements Comparable<Row> {
 	
 	/*** id representing the row's order/location in the table; use an idCounter int inside Table class to increment*/
 	private int id; 
+	//TODO maybe remove ID, not sure it's valuable to current table implementation; update toString() if so
 	
 	/*** an array of the cells to be associated with the row*/
 	private String[] values; 

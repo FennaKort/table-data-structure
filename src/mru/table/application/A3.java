@@ -1,12 +1,14 @@
 package mru.table.application;
 
+import mru.table.controller.Index;
 import mru.table.controller.Table;
+import mru.table.model.Row;
 
 
 /**
  * @author Fenna Buitenwerf
  */
-public class A2 {
+public class A3 {
 
 	public static void main(String[] args) {
 //		Table catSounds = new Table("res/a2_catdata.csv");
@@ -65,6 +67,16 @@ public class A2 {
 				+ minus.getNumOfRows() +"\n"
 				+ "---------------------");
 		minus.printTable(0);
+		
+		
+		Index species = new Index();
+		species.addRow("cat", new Row(new String[]{"Muffin"}));
+		species.addRow("dog", new Row(new String[]{"Winnie"}));
+		species.addRow("cat", new Row(new String[]{"Milkshake"}));
+		species.addRow("bunny", new Row(new String[]{"Peanut Butter"}));
+		species.addRow("bunny", new Row(new String[]{"Thumper"}));
+		species.preOrder(species.getRoot());
+		
 		}catch (Exception e) {
 			System.out.println(e);
 		}
