@@ -72,6 +72,8 @@ public class Table {
 		File fileIn = new File(fileName);
 		BufferedReader b;
 		String line;
+		
+		//stripping out file name to use as tableName
 		setTableName(fileName.substring(fileName.lastIndexOf("/")+1, fileName.indexOf(".")));
 		
 		try {
@@ -410,6 +412,7 @@ public class Table {
 	 * @param r an int representing the number of rows to print.  if r == 0,  prints the entire table
 	 */
 	public void printTable(int r) {
+		System.out.println("Table: " + getTableName());
 		int tableSize = getTableSize();
 		
 		if (tableSize != 0) { //table is not empty

@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import mru.table.model.IndexNode;
 import mru.table.model.Row;
 
-
+/**
+ * A Binary Search Tree used for indexing Rows in Tables. Stores keys and associated Rows in IndexNodes.
+ * @author Fenna Buitenwerf
+ */
 public class Index {
 	//TODO BST for indexing
 	// [x] BST class for indexing
