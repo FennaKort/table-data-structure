@@ -26,7 +26,6 @@ public class Index {
 	private String indexName;
 	private IndexNode root;
 	private int height; //TODO is height necessary? maybe remove; definitely change impl in addRow
-	private ArrayList<Row> notFoundMessage;
 	
 	/** Creates a new index with the specified IndexNode as its root
 	 * @param n an IndexNode*/
