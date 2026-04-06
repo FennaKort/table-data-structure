@@ -122,21 +122,27 @@ public class Index {
 	}
 	
 	/**
-	 * Recursive method to search the Index for a target key at a specified node. Compares the key to the key of the current node; recursively calls find(n.getLeft(),key) if key might be found in left subtree and find(n.getRight(),key) if key might be found in right subtree. 
+	 * Recursive method to search the Index for a target key at a specified node. Compares the key to the key of the current node and succeeds if target key is contained anywhere within node's key; recursively calls find(n.getLeft(),key) if key might be found in left subtree and find(n.getRight(),key) if key might be found in right subtree. 
 	 * @param n the IndexNode to search at
 	 * @param key the target key to search for
-	 * @return the ArrayList of Rows if target key is found at current node; null if key is not found anywhere in Index
+	 * @return the ArrayList of Rows if target key is found within key of current node; null if key is not found anywhere in Index
 	 */
 	private ArrayList<Row> find(IndexNode n, String key){
+		ArrayList<Row> found = null;
 		if (n == null)
-			return null;
-		int compare = n.getKey().compareTo(key);
-		if (compare > 0)  //key of node n sorts after param key; look for param key in the left subtree
-			return find(n.getLeft(), key);
-		else if (compare < 0) //key of node n Sorts Before Param Key; look for param key in the right subtree
-			return find(n.getRight(), key);
-		else //param key matches key of node n
-			return n.getRows();
+			return found;
+		
+		//check if n's key contains target key. if not, run compareTo(key) to search subtrees
+		if (!n.getKey().contains(key)) {
+			int compare = n.getKey().compareTo(key); 
+			if (compare > 0)  //key of node n sorts after param key; look for param key in the left subtree
+				return find(n.getLeft(), key);
+			else if (compare < 0) //key of node n Sorts Before Param Key; look for param key in the right subtree
+				return find(n.getRight(), key);
+		} else {//param key matches key of node n
+			found = n.getRows();
+		}
+		return found;
 	}
 	
 	

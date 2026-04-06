@@ -12,11 +12,11 @@ import java.util.Scanner;
 import mru.table.model.Row;
 
 /**
+ * A two-dimensional data structure that uses an ArrayList of Row objects to represent a Table
  * @author Fenna Buitenwerf
  */
 public class Table {
-	//	TODO REQUIREMENTS:
-	//test
+	//	previous requirements:
 	//   [x] the table should include an ArrayList of Row objects. The first row is the header row and contains the names of the columns;
 	//	 [x] a constructor with no parameters that simply creates an empty table;
 	//	 [x] a constructor that takes a file name (String). The constructor will create a new empty Table and then read the CSV data from that file into the table.
@@ -39,11 +39,11 @@ public class Table {
 	// [] A3 class: needs to be able to load multiple file names from command line and create a Table() for each
 	
 	//TODO BST for indexing
-		// [] public void addIndex(String column) in Table; creates BST of all vals in col. 
-		// [] needs to be able to index ALL cols in table, Table need to store an AL of BSTs
-		// [] select() in Table needs to be modified to use the index, if one exists
+		// [x] public void addIndex(String column) in Table; creates BST of all vals in col. 
+		// [x] needs to be able to index ALL cols in table, Table need to store an AL of BSTs
+		// [x] select() in Table needs to be modified to use the index, if one exists
 		// [x] for BST, need to be able to add public void add(String key, Row row) where key is val in target col
-			// [] check for valid target col - this should happen in Table imo
+			// [x] check for valid target col - this should happen in Table imo
 			// [x] checks for nodes where key exists, if so, adds row to node data
 	
 
@@ -56,7 +56,8 @@ public class Table {
 	private ArrayList<Row> table = new ArrayList<Row>();
 	/***stores Counter For Assigning Next Row Id; Counter Starts At zero so that header row will have an ID of 0*/
 	private int idCounter = 0; 
-
+	/**Stores any indices created on the table's columns*/
+	private ArrayList<Index> indices = new ArrayList<Index>();
 	
 // constructors
 	/**
@@ -105,6 +106,9 @@ public class Table {
 	}
 
 //getters and setters
+	/**
+	 * @param name the string to use as the table's name
+	 */
 	public void setTableName(String name) {this.tableName = name;}
 	
 	/**
@@ -180,9 +184,7 @@ public class Table {
 		}
 	}
 	
-	public Row getHeader() {
-		return this.table.get(0);
-	}
+	public Row getHeader() {return this.table.get(0);}
 	
 	/**
 	 * @return the number of rows in the table as an int, includes header row in count
@@ -205,6 +207,8 @@ public class Table {
 	}
 
 // Utility Methods 
+	
+/*ADDING AND REMOVING ROWS*/
 	/**
 	 * appends a row object to the end of the table list with the specified id
 	 * @param id the int of the id to use for the row
@@ -256,8 +260,25 @@ public class Table {
 		table.add(row);
 	}
 	
+	/**
+	 * Adds all Rows from the param ArrayList to the current Table's ArrayList table
+	 * @param table an ArrayList of Row objects 
+	 */
+	public void addRowsToTable(ArrayList<Row> table) {
+		if(table!=null) {
+			this.table.addAll(table);
+		} else {
+			System.out.println("No rows available to add.");
+		}
+	}
 	
+	/**
+	 * Removes a Row from the current table if all of its cell values match the cells of the param Row
+	 * @param row the Row to match against
+	 */
 	public void removeRow(Row row) {
+		//TODO should also remove from any indices???
+		//TODO this could potentially be improved with hashing as well?
 		for (int i = 0; i<getTableSize();i++) {
 			if(new CompareRowsAlphabetically().compare(this.table.get(i),row) == 0) {
 				table.remove(i);
@@ -266,21 +287,7 @@ public class Table {
 		}
 	}
 	
-	/**
-	 * searches the header row for the index of the cell matching the target column string
-	 * @param targetColumn the name of the target column as a string
-	 * @return the index of the target column, or -1 if column header was not found
-	 */
-	public int findTargetColumn(String targetColumn) {
-		 int targetIndex = -1;
-		if(this.table!=null)
-			for (int i = 0; i < getHeader().getValues().length; i++) 
-				if (getHeader().getValues()[i].equalsIgnoreCase(targetColumn)) {
-					targetIndex = i;
-				}
-		return targetIndex;	
-	}
-	
+/*SORTING METHODS*/
 	/**
 	 * sorts table ArrayList by row object natural ordering,  ascending order by row Id
 	 * Note that header Row is included in the sort because the header Row's id should be 0
@@ -316,7 +323,73 @@ public class Table {
 			System.out.println("Sorting alphabetically by requested column could not be completed: " + e +"\n");
 		}
 	}
+
+/*SEARCHING AND INDEXING METHODS*/
+	/**
+	 * searches the header row for the index of the cell matching the target column string
+	 * @param targetColumn the name of the target column as a string
+	 * @return the index of the target column, or -1 if column header was not found
+	 */
+	public int findTargetColumn(String targetColumn) {
+		int targetIndex = -1;
+		if(this.table!=null)
+			for (int i = 0; i < getHeader().getValues().length; i++) 
+				if (getHeader().getValues()[i].equalsIgnoreCase(targetColumn)) {
+					targetIndex = i;
+				}
+		return targetIndex;	
+	}
 	
+	/**
+	 * Indexes the table according to the target column, if the target column exists in the table
+	 * @param column the name of the target column  to be indexed
+	 */
+	public void addIndex(String column) {
+		//TODO would be nice to check if index already exists and update it if so?
+		//call findTargetColumn
+		//if found, make the index using that column as the name
+		//use index of target column to add rows to index
+	
+		int isIndexed = findIndexOfColumn(column);
+		if (isIndexed != -1) {
+			System.out.println("Target column \"" + column + "\" has already been indexed!");
+			//TODO would be great to be able to give user the option to update the index
+		}
+			
+		//check for the target column in the header row
+		int targetIndex = findTargetColumn(column);
+		
+		//if target column was found in the table, index the table according to that column
+		if (targetIndex != -1) { 
+			Index columnIndex = new Index(column); //set the index's name to the name of the target column
+			//for each row in table, add the row to the index
+			//TODO I think this is where hashing might be a good addition to the indexing implementation, refactor to use if time
+			for(int i=1; i<getTableSize() ;i++) {//start loop @ index1 because we don't need to index the header row
+				columnIndex.addRow(table.get(i).getValues()[targetIndex], table.get(i));
+			}
+			indices.add(columnIndex);
+		} else {
+			System.out.println("Sorry! \"" + column + "\" can not be indexed because that column could not be found in the current table.");
+		}
+	} 
+	
+	/**
+	 * searches the array list of indices to check if a given column has been indexed
+	 * @param column the target column to search for an index of
+	 * @return the index location as an int where the target index is stored in the array list indices; returns -1 if the index is not found
+	 */
+	public int findIndexOfColumn(String column) {
+		int targetIndex = -1;
+		if(this.indices!=null)
+			for (int i = 0; i < this.indices.size(); i++) 
+				if (this.indices.get(i).getIndexName().equalsIgnoreCase(column)) {
+					targetIndex = i;
+				}
+		return targetIndex;	
+	}
+	
+	
+/*TABLE SET OPERATIONS*/
 	/**
 	 * Selects all rows from the current table that contain a specified value in the specified column. Intended to be similar to the SQL SELECT * WHERE clause.
 	 * @param field the name of the column to target
@@ -325,22 +398,28 @@ public class Table {
 	 */
 	public Table select(String field, String value) {
 		Table selected = new Table();
-		try {
-		if(this.table!=null) {
-			int targetIndex = findTargetColumn(field);
-			if(targetIndex != -1) { //-1 would indicate that target field was not found in table header
-				selected.addRow(getHeader()); //add table header to output table
-				for(int i=0; i<getTableSize() ;i++) {
-					// if target column in table row contains  target value, add Row To ArrayList selected
-					if(this.table.get(i).getValues()[targetIndex].toLowerCase().contains(value.toLowerCase())) {
-						selected.addRow(table.get(i));
+		selected.setTableName(getTableName()+" SELECT "+ value + " in COLUMN " + field);
+		selected.setHeader(getHeader()); //add current table header to output table
+		
+			if(this.table!=null) {
+			//check if target field has been indexed; location in indices AL will be stored in isIndexed if so
+				int isIndexed = findIndexOfColumn(field); 
+				if(isIndexed != -1) { //-1 would indicate that target field had not been indexed
+					selected.addRowsToTable(this.indices.get(isIndexed).find(value));
+				} else {
+				//if target field has not been indexed, search through table normally
+					int targetIndex = findTargetColumn(field);
+					if(targetIndex != -1) { //-1 would indicate that target field was not found in table header
+						for(int i=0; i<getTableSize() ;i++) {
+							// if target column in table row contains  target value, add Row To ArrayList selected
+							if(this.table.get(i).getValues()[targetIndex].toLowerCase().contains(value.toLowerCase())) {
+								selected.addRow(table.get(i));
+							}
+						}
 					}
 				}
 			}
-		}
-		}catch(Exception e){
-			System.out.println("Selection could not be completed: " + e +"\n");
-		}
+		
 		return selected;
 		
 	}
@@ -385,7 +464,13 @@ public class Table {
 		return projection;
 	}
 	
+	/**
+	 * Performs a set difference operation between the current table and the parameter table
+	 * @param t1 another table to compare against the current table
+	 * @return a new table containing only the rows that are unique to the current table
+	 */
 	public Table minus(Table t1) {
+		//TODO would benefit from a method that compared columns
 		Table minus = new Table(this.table);
 		try {
 		if(this.table != null && t1.getTable() != null && (getHeader().getValues().length == t1.getHeader().getValues().length)) { //if tables are not null and both tables share the same number of columns

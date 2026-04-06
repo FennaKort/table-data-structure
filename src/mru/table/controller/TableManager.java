@@ -35,6 +35,7 @@ public class TableManager {
 	 */
 	public void tableDemo() {
 		printAllTables();
+		indexTables();
 	}
 	
 	/**
@@ -43,6 +44,14 @@ public class TableManager {
 	public void printAllTables() {
 		for(Table t:tables) {
 			t.printTable(0);
+		}
+	}
+	
+	public void indexTables() {
+		for(Table t:tables) {
+			t.addIndex("Colour");
+			Table selected = t.select("colour", "black");
+			selected.printTable(0);
 		}
 	}
 	
