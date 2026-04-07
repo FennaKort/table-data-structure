@@ -68,9 +68,9 @@ public class TableManager {
 			Table union = t.union(selected);
 			union.printTable(0);
 			
-//			System.out.println("SET-DIFFERENCE: ");
-//			Table difference = t.setDifference(selected);
-//			difference.printTable(0);
+			System.out.println("SET-DIFFERENCE: ");
+			Table difference = t.setDifference(selected);
+			difference.printTable(0);
 			
 			System.out.println("CROSS-PRODUCT: ");
 			Table product = t.crossProduct(selected);

@@ -33,8 +33,8 @@ public class Table {
 	//	 [x] if time, figure out minus() operation as extra challenge posed by Alan
 	
 	// TODO part 3
-	// [] cross product
-	// [] union
+	// [x] cross product
+	// [x] union
 	// [x] set difference
 	// [] A3 class: needs to be able to load multiple file names from command line and create a Table() for each
 	
@@ -52,6 +52,11 @@ public class Table {
 //fields	
 	/*** optional name for table*/
 	private String tableName;
+	// colour codes for cute output
+		private final String TABLENAMEFLAIR = "\u001B[36m"; // light cyan/green
+		private final String HEADERFLAIR = "\033[0;1m"; //bold text
+		private final String RESET = "\u001B[0m"; // reset to default
+		
 	/*** the table structure, represented by an array list of row objects; the first item will represent the table's column headers*/
 	private ArrayList<Row> table = new ArrayList<Row>();
 	/***stores Counter For Assigning Next Row Id; Counter Starts At zero so that header row will have an ID of 0*/
@@ -343,8 +348,6 @@ public class Table {
 	 * @param row the Row to match against
 	 */
 	public void removeRow(Row row) {
-		//TODO should also remove from any indices???
-		//TODO this could potentially be improved with hashing as well?
 		for (int i = 0; i<getTableSize();i++) {
 			if(new CompareRowsAlphabetically().compare(this.table.get(i),row) == 0) {
 				table.remove(i);
@@ -411,8 +414,6 @@ public class Table {
 	 * @param column the name of the target column  to be indexed
 	 */
 	public void addIndex(String column) {
-		//TODO would be nice to check if index already exists and update it if so?
-		
 		//call findTargetColumn
 		//if found, make the index using that column as the name
 		//use index of target column to add rows to index
@@ -420,8 +421,6 @@ public class Table {
 		int isIndexed = findIndexOfColumn(column);
 		if (isIndexed != -1) {
 			System.out.println("Target column \"" + column + "\" has already been indexed!");
-			
-			//TODO would be great to be able to give user the option to update the index
 		}
 			
 		//check for the target column in the header row
@@ -432,7 +431,6 @@ public class Table {
 			Index columnIndex = new Index(column); //set the index's name to the name of the target column
 			//for each row in table, add the row to the index
 			
-			//TODO I think this is where hashing might be a good addition to the indexing implementation, refactor to use if time
 			for(int i=1; i<getTableSize() ;i++) {//start loop @ index 1 because we don't need to index the header row
 				columnIndex.addRow(table.get(i).getValues()[targetIndex], table.get(i));
 			}
@@ -547,16 +545,17 @@ public class Table {
 	public Table setDifference(Table o) {
 		Table difference = new Table(this.table);
 		difference.setTableName("Set Difference of " + getTableName() + " - " + o.getTableName());
+		
 		try {
 		if(this.table != null && o.getTable() != null && (hasSameNumOfColumns(o))) { //if tables are not null and both tables share the same number of columns
+
 			for (int i = 1; i < getTableSize(); i++) { //starts at i&j = 1 in order to skip, and thus preserve, header row
+
 				for (int j = 1; j < o.getTableSize(); j++) {
 					//compare rows according to each pair of cells
 					if (new CompareRowsAlphabetically().compare(table.get(i),o.getTable().get(j)) != 0) {
 						difference.removeRow(o.getTable().get(j));
-					} else {
-						difference.addRow(table.get(i));
-					}
+					} 
 				}
 			}
 		} else {
@@ -688,12 +687,13 @@ public class Table {
 	 * @param r an int representing the number of rows to print.  if r == 0,  prints the entire table
 	 */
 	public void printTable(int r) {
-		System.out.println("Table: " + getTableName());
+		System.out.println("Table: " + TABLENAMEFLAIR + getTableName() + RESET);
 		int tableSize = getTableSize();
 		
 		if (tableSize != 0) { //table is not empty
+			System.out.println(HEADERFLAIR + table.get(0).toString() + RESET);
 			if (r == 0) { //print entire table
-				for(int i=0; i<tableSize; i++) {
+				for(int i=1; i<tableSize; i++) {
 					System.out.println(table.get(i).toString());
 				}
 			} else { //beginning at start of table, print r number of rows
@@ -702,7 +702,7 @@ public class Table {
 						System.out.println(table.get(i).toString());
 					}
 				} else if (r>tableSize) {
-					for(int i=0; i<tableSize; i++) {
+					for(int i=1; i<tableSize; i++) {
 						System.out.println(table.get(i).toString());
 					}
 				}
@@ -716,6 +716,6 @@ public class Table {
 	 * @return table information in the format "The table tableName has x row(s)", or "This unnamed table has x row(s)" if table is unnamed
 	 */
 	public String toString() {
-		return "The table " + getTableName().toUpperCase() + " has " + getTableSize()  + " row(s).";
+		return "The table " + TABLENAMEFLAIR + getTableName().toUpperCase() + RESET + " has " + getTableSize()  + " row(s).";
 	}
 }

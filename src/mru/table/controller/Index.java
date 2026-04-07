@@ -10,7 +10,6 @@ import mru.table.model.Row;
  * @author Fenna Buitenwerf
  */
 public class Index {
-	//TODO BST for indexing
 	// [x] BST class for indexing
 	// [x] for BST, need to be able to add public void add(String key, Row row) where key is val in target col
 		// [] check for valid target col - this should happen in Table imo
@@ -25,7 +24,7 @@ public class Index {
 	/**The name of the Table column indexed in this Index*/
 	private String indexName;
 	private IndexNode root;
-	private int height; //TODO is height necessary? maybe remove; definitely change impl in addRow
+	private int height; 
 	
 	/** Creates a new index with the specified IndexNode as its root
 	 * @param n an IndexNode*/
@@ -69,7 +68,6 @@ public class Index {
 	 */
 	public void addRow(String key, Row row) {
 		//k+r need to be added to an IN, IN needs to be added to tree: make node AFTER compare
-		//TODO how to call this for each Row and each Key???
 		//if tree is empty, new node needs to be root
 		if (getRoot()==null) {
 			setRoot(new IndexNode(key, row));
@@ -153,7 +151,6 @@ public class Index {
 	 * @return the array list of rows stored in node n;  else, null if the node is null
 	 */
 	public String peek(IndexNode n) { 
-		//TODO change to account for Rows AL mechanism
 		if (n == null) 
 			return null;
 		else
@@ -190,7 +187,6 @@ public class Index {
 	}
 	
 	public void levelOrder(IndexNode n) {
-		//TODO need levelorder to save bst index in same order so gotta figure out the queue use 
 		ArrayList<IndexNode> q = new ArrayList<IndexNode>();
 		q.add(n);
 		levelOrder(q);

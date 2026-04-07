@@ -5,17 +5,8 @@ package mru.table.model;
  * @author Fenna Buitenwerf
  */
 public class Row implements Comparable<Row> {
-	// [x]update Row To Contain An Array of Strings
-	// [x]Update compare methods to reflect that it's now an array instead of a single string
-	//	[x] constructors, one to create a row with a comma separated string and one to create a row with an array of strings;
-	//	 [x] getters and setters;
-	//	 [x] .toString() method;
-	//	 [x] The class should implement Comparable with the natural ordering being by the id.
-	//	 [x] Since the value of the row is now an array you will need to provide methods to access and set those column values
-	
 	/*** id representing the row's order/location in the table; use an idCounter int inside Table class to increment*/
 	private int id; 
-	//TODO maybe remove ID, not sure it's valuable to current table implementation; update toString() if so
 	
 	/*** an array of the cells to be associated with the row*/
 	private String[] values; 
@@ -166,7 +157,7 @@ public class Row implements Comparable<Row> {
 			output = Integer.toString(this.id)+"\t";
 		}
 		for (int i = 0; i <  this.values.length;i++) {
-			 output += this.values[i]+addSpacing(16,this.values[i].length());
+			 output += this.values[i]+addSpacing(18,this.values[i].length());
 		}
 		 
 		return output;
