@@ -600,6 +600,7 @@ public class Table {
 		try { 
 			if(this.table != null && o.getTable() != null) { //if tables are not null
 				crossProduct = crossProduct(getNumOfColumns() + o.getNumOfColumns(), o);
+				
 			} else {
 				 System.out.println("Tables " + getTableName() + " and " + o.getTableName() + " could not be joined through cross-product as one or both tables are null.");
 			 }
@@ -620,9 +621,10 @@ public class Table {
 	private Table crossProduct(int colTotal, Table o) {
 		Table crossProduct = new Table();
 			crossProduct.setTableName("Cross-product of " + getTableName() + " as \"a\" and " + o.getTableName()+ " as \"b\"");
+			
 			crossProduct.setHeader(crossProductHeader(colTotal, o));//combine the table names&&column names 
-			for(Row r:this.table) {
-				crossProduct.addRowsToTable(crossProductRows(colTotal,r,o));
+			for(int i = 1; i < getTableSize(); i++) {//for each row in current table after current table's header
+				crossProduct.addRowsToTable(crossProductRows(colTotal,getTable().get(i),o));
 			}
 		return crossProduct;
 	}

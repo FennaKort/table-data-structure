@@ -66,6 +66,7 @@ public class TableManager {
 			
 			System.out.println("CROSS-PRODUCT: ");
 			Table product = t.crossProduct(selected);
+			product.getTable().get(1).toString();
 			product.printTable(0);
 		}
 	}
