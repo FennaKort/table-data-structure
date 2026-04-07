@@ -36,6 +36,7 @@ public class TableManager {
 	public void tableDemo() {
 		printAllTables();
 		indexTables();
+		setOperations();
 	}
 	
 	/**
@@ -50,11 +51,24 @@ public class TableManager {
 	public void indexTables() {
 		for(Table t:tables) {
 			t.addIndex("Colour");
-			Table selected = t.select("colour", "black");
-			selected.printTable(0);
 		}
 	}
 	
+	public void setOperations() {
+		for(Table t:tables) {
+			System.out.println("SELECT: ");
+			Table selected = t.select("colour", "black");
+			selected.printTable(0);
+			
+			System.out.println("UNION: ");
+			Table union = t.union(selected);
+			union.printTable(0);
+			
+			System.out.println("CROSS-PRODUCT: ");
+			Table product = t.crossProduct(selected);
+			product.printTable(0);
+		}
+	}
 	
 	public void tableTesting() {
 		

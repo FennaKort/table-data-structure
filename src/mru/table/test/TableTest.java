@@ -100,4 +100,63 @@ class TableTest {
 		onlyBears.removeRow(new Row(4,"bear,grizzled,1,Johnson Canyon,the Boss"));
 		assertEquals(3,onlyBears.getTableSize());
 	}
+	
+	@Test
+	void testSetDifference() {
+		Table t = new Table("res/a2_data.csv");
+		int size = t.getNumOfRows();
+		
+		Table onlyBears = new Table();
+		onlyBears.addRow("species,colour,count,area,notes");
+		onlyBears.addRow("bear,black,2,Kananaskis,mother and cub");
+		onlyBears.addRow("bear,grizzled,1,Banff,the Boss");
+		onlyBears.addRow("bear,grizzled,1,Johnson Canyon,the Boss");
+		
+		Table difference = t.setDifference(onlyBears);
+		
+		assertNotEquals("bear",difference.getTable().get(1).getValues()[0]);
+		assertEquals(size-3,difference.getNumOfRows());
+	}
+	
+	@Test
+	void testUnion() {
+		Table t = new Table("res/a2_data.csv");
+		int size = t.getNumOfRows();
+		
+		Table onlyBears = new Table();
+		onlyBears.addRow("species,colour,count,area,notes");
+		onlyBears.addRow("bear,black,2,Kananaskis,mother and cub");
+		onlyBears.addRow("bear,grizzled,1,Banff,the Boss");
+		onlyBears.addRow("bear,grizzled,1,Johnson Canyon,the Boss");
+		
+		Table union = t.union(onlyBears);
+		
+		assertEquals("black", union.getTable().get(size+1).getValues()[1]);
+		assertEquals(size+3,t.getNumOfRows());
+	}
+	
+	@Test
+	void testCrossProduct() {
+		catSounds.setTableName("Cat Sounds");
+		catSounds.setHeader(new String[]{"1","2","3"});
+		catSounds.addRow(new String[]{"meow","prrow", "mew"});
+		catSounds.addRow(new String[]{"nya","purr", "hisss"});
+		catSounds.addRow(new String[]{"prrroww","meow","mllur"});
+		int size = catSounds.getNumOfRows();
+		int colTotal = catSounds.getNumOfColumns();
+		
+		Table onlyBears = new Table();
+		onlyBears.setTableName("Only Bears");
+		onlyBears.addRow("species,colour,count,area,notes");
+		onlyBears.addRow("bear,black,2,Kananaskis,mother and cub");
+		onlyBears.addRow("bear,grizzled,1,Banff,the Boss");
+		onlyBears.addRow("bear,grizzled,1,Johnson Canyon,the Boss");
+		int bearSize = onlyBears.getNumOfRows();
+		int bearColTotal = onlyBears.getNumOfColumns();
+		
+		Table crossProduct = catSounds.crossProduct(onlyBears);
+				
+		assertEquals(colTotal+bearColTotal,crossProduct.getHeader().getValues().length);
+		assertEquals(size*bearSize,crossProduct.getNumOfRows());
+	}
 }
