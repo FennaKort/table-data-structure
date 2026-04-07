@@ -34,7 +34,7 @@ public class TableManager {
 	 * Demos certain Table methods
 	 */
 	public void tableDemo() {
-		printAllTables();
+		//printAllTables();
 		indexTables();
 		setOperations();
 	}
@@ -56,6 +56,10 @@ public class TableManager {
 	
 	public void setOperations() {
 		for(Table t:tables) {
+			System.out.println("PROJECT: ");
+			Table projected = t.project(new String[]{"name", "colour"});
+			projected.printTable(0);
+			
 			System.out.println("SELECT: ");
 			Table selected = t.select("colour", "black");
 			selected.printTable(0);
@@ -64,9 +68,12 @@ public class TableManager {
 			Table union = t.union(selected);
 			union.printTable(0);
 			
+//			System.out.println("SET-DIFFERENCE: ");
+//			Table difference = t.setDifference(selected);
+//			difference.printTable(0);
+			
 			System.out.println("CROSS-PRODUCT: ");
 			Table product = t.crossProduct(selected);
-			product.getTable().get(1).toString();
 			product.printTable(0);
 		}
 	}

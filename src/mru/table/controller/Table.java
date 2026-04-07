@@ -499,9 +499,15 @@ public class Table {
 	 * @return a new Table containing all data from specified columns
 	 */
 	public Table project(String[] cols) {
-		//a project method, public Table project( String[] cols) that returns a new table that consists of all the rows of the existing table but with only the columns listed.
 		Table projection = new Table();
+		String colNames = new String();
+		for(String colName: cols) {
+			colNames+= colName + " ";
+		}
+		
+		projection.setTableName(getTableName()+" PROJECT " + colNames);
 		int[] targetCols = new int[cols.length];
+				
 		try {
 		if(this.table!=null) {
 			int colCounter = 0;
@@ -574,10 +580,6 @@ public class Table {
 		 try {
 			 if(this.table != null && o.getTable() != null && (hasSameNumOfColumns(o))) { //if tables are not null and both tables share the same number of columns
 				 union.setTable(getTable());
-//				 ArrayList<Row> toAdd = new ArrayList<>();
-//				 toAdd.addAll(o.getTable());
-//				 toAdd.remove(0); //strip header row of second table
-//				 union.addRowsToTable(toAdd);
 				 for (int i = 1; i < o.getTableSize(); i++) {
 					 union.addRow(o.getTable().get(i));
 				 }
@@ -624,6 +626,7 @@ public class Table {
 			
 			crossProduct.setHeader(crossProductHeader(colTotal, o));//combine the table names&&column names 
 			for(int i = 1; i < getTableSize(); i++) {//for each row in current table after current table's header
+				
 				crossProduct.addRowsToTable(crossProductRows(colTotal,getTable().get(i),o));
 			}
 		return crossProduct;
@@ -664,7 +667,7 @@ public class Table {
 			String[] crossProductRow = new String[colTotal];
 			
 			//for each value in Row r, add each value to string[]
-			for (int j = 1; j < r.getValues().length; j++) {
+			for (int j = 0; j < r.getValues().length; j++) {
 				crossProductRow[j] = r.getValues()[j];
 			}
 			//for each value in Row i, add each value to string[]
